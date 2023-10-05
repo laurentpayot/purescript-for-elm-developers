@@ -1,0 +1,23 @@
+{
+  "name": "purescript-counter-web-app",
+  "version": "0.1.0",
+  "description": "PureScript counter web app using Flame and Vite",
+  "keywords": [
+    "PureScript",
+    "counter",
+    "web",
+    "app",
+    "Flame",
+    "Vite"
+  ],
+  "author": "Laurent Payot",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "purescript": "^0.15.11",
+    "spago": "^0.21.0"
+  }
+}
