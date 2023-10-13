@@ -2,4 +2,8 @@
     "purescript.addSpagoSources": true,
     "purescript.addNpmPath": true,
     "purescript.buildCommand": "spago build --purs-args --json-errors",
+    "purescript.formatter": "purs-tidy",
+    "[purescript]": {
+        "editor.formatOnSave": true
+    },
 }
