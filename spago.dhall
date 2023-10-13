@@ -10,9 +10,15 @@ When creating a new Spago project, you can use
 `spago init --no-comments` or `spago init -C`
 to generate this file without the comments in this block.
 -}
-{ name = "my-project"
+{ name = "purescript-counter-web-app"
 , dependencies =
-  [ "assert", "console", "effect", "foldable-traversable", "lists", "prelude" ]
+  [ "assert"
+  , "effect"
+  , "flame"
+  , "foldable-traversable"
+  , "lists"
+  , "prelude"
+  ]
 , packages = ./packages.dhall
-, sources = [ "src/**/*.purs", "test/**/*.purs" ]
+, sources = [ "src/purs/**/*.purs", "tests/purs/**/*.purs" ]
 }

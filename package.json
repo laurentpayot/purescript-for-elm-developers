@@ -15,7 +15,7 @@
   "main": "index.js",
   "scripts": {
     "test": "spago test",
-    "build": "spago bundle-app"
+    "build": "spago bundle-app --to dist/index.js --minify --then 'cp src/index.html dist/index.html'"
   },
   "devDependencies": {
     "esbuild": "^0.19.4",
