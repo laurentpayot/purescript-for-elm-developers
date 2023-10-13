@@ -1,21 +1,22 @@
 {
   "name": "purescript-counter-web-app",
   "version": "0.1.0",
-  "description": "PureScript counter web app using Flame and Vite",
+  "description": "PureScript counter web app using Flame",
   "keywords": [
     "PureScript",
     "counter",
     "web",
     "app",
-    "Flame",
-    "Vite"
+    "Flame"
   ],
   "author": "Laurent Payot",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "test": "spago test",
-    "build": "spago bundle-app --to dist/index.js --minify --then 'cp src/index.html dist/index.html'"
+    "build:html": "mkdir -p dist && cp src/index.html dist/index.html",
+    "build": "spago bundle-app --to dist/index.js --minify --before 'pnpm build:html'",
+    "start": "spago bundle-app --to dist/index.js --watch --source-maps --clear-screen --before 'pnpm build:html'"
   },
   "devDependencies": {
     "esbuild": "^0.19.4",
