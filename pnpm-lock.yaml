@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^0.19.4
     version: 0.19.4
   purescript:
-    specifier: ^0.15.11
-    version: 0.15.11
+    specifier: ^0.15.12
+    version: 0.15.12
   purs-tidy:
     specifier: ^0.10.0
     version: 0.10.0
@@ -1228,8 +1228,8 @@ packages:
       - supports-color
     dev: true
 
-  /purescript@0.15.11:
-    resolution: {integrity: sha512-kzYNdjyZ5H2LZhpmYS/kBbMppyi9BwyaqohoYTijKCCS3GRa2GGWrElouFDuyt6l0xz0gMMMh1o6dfUNXMeLVQ==}
+  /purescript@0.15.12:
+    resolution: {integrity: sha512-ukqgU6uW+g5fMtVJdM+xmwiikgAUnGkOCacrscA/MzHlxO/x1R2FIzgyCZcnc7ChN+lq6Qp1VGVg2EPqNeJ0oA==}
     hasBin: true
     requiresBuild: true
     dependencies:
