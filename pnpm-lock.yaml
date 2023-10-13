@@ -11,6 +11,9 @@ devDependencies:
   purescript:
     specifier: ^0.15.11
     version: 0.15.11
+  purs-tidy:
+    specifier: ^0.10.0
+    version: 0.10.0
   spago:
     specifier: ^0.21.0
     version: 0.21.0
@@ -1234,6 +1237,11 @@ packages:
     transitivePeerDependencies:
       - bluebird
       - supports-color
+    dev: true
+
+  /purs-tidy@0.10.0:
+    resolution: {integrity: sha512-ULbJfBHRngczYwcOzugytRiNy+Guy2VXoAG1jMtGaSFEaUZk1lZkKU11t8jIZTrDdOrkgqlWCZLi3mfcHvdimA==}
+    hasBin: true
     dev: true
 
   /readable-stream@2.3.8:

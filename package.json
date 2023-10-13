@@ -20,6 +20,7 @@
   "devDependencies": {
     "esbuild": "^0.19.4",
     "purescript": "^0.15.11",
+    "purs-tidy": "^0.10.0",
     "spago": "^0.21.0"
   }
 }
