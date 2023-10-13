@@ -6,4 +6,4 @@
 
 ##  TO DO
 
-- Vite builds for CSS and TS files
+- Vite builds for CSS and TS files. Like https://github.com/kajetansw/purescript-react-vite-starter/blob/master/vite.config.js ???
