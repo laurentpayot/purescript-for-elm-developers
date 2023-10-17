@@ -342,96 +342,30 @@ class Functor f where
   map :: forall a b. (a -> b) -> f a -> f b
 ```
 
-## Constraints
+## Type class constraints
 
-You can constraint the usage of a function so that a type parameter must satisfy certain conditions. Constraints are declared on the left of the fat arrow (`=>`).
-
-Given our Number type class in Haskell, one could add a sum function like so:
+Here is a type class constraint `Eq a`, separated from the rest of the type by a double arrow `=>`:
 
 ```purs
-sum :: (Number a) => List a -> a
-sum as =
-  foldl (+) 0 as
+threeAreEqual :: forall a. Eq a => a -> a -> a -> Boolean
+threeAreEqual a1 a2 a3 = a1 == a2 && a2 == a3
 ```
 
-A sum function does not make sense unless its arguments can be treated like numbers. Thus, by adding `(Number a) =>` in the beginning of the signature, we constrain all mentions of a in the rest of the signature to be instances of the Number type class. This is important because we need to use the (+) operator in the definition, which is only accessible to instances of the Number type class!
+This type says that we can call `threeAreEqual` with any choice of type `a`, as long as there is an `Eq` instance available for `a` in one of the imported modules.
 
-## Applicatives
-
-`<*>` is the infix alias of the *apply* operator defined in the [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Applicative) type class, and is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
+Multiple constraints can be specified by using the => symbol multiple times:
 
 ```purs
-class Applicative f where
-  pure :: a -> f a
-  (<*>) :: f (a -> b) -> f a -> f b
+showCompare :: forall a. Ord a => Show a => a -> a -> String
+showCompare a1 a2 | a1 < a2 =
+  show a1 <> " is less than " <> show a2
+showCompare a1 a2 | a1 > a2 =
+  show a1 <> " is greater than " <> show a2
+showCompare a1 a2 =
+  show a1 <> " is equal to " <> show a2
 ```
 
-Applicative lets us perform N operations independently, then it aggregates the results for us.
-You are in an applicative context when using [`Decoder`](https://package.elm-lang.org/packages/elm/json/latest/Json-Decode#map2) in Elm.
-
-### Map alias `<$>`
-
-Often used with `<*>`, the `<$>` operator is alias for `map` but in infix position, meaning that the two are equivalent:
-
-```purs
-map (\n -> n + 1) (Just 5)
-(\n -> n + 1) <$> (Just 5)
-```
-
-## Monads
-
-`>>=` is the infix alias of the *bind* operator defined in the [Monad](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Monad) type class, and is is equivalent to [`|> andThen`](https://package.elm-lang.org/packages/elm/core/latest/Maybe#andThen) in Elm.
-```purs
-class Monad m where
-  (>>=) :: m a -> (a -> m b) -> m b
-```
-
- The signature is the same as that of Elm’s `Maybe.andThen`, except the arguments are flipped. They are flipped in PureScript because their version is an infix operator:
-
-```elm
--- Elm
-example : Maybe Int
-example =
-  Just "23" |> Maybe.andThen String.toInt
-```
-
-```purs
--- PureScript
-example :: Maybe Int
-example =
-  Just "23" >>= readMaybe
-```
-
-Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something “fails” the operation aborts.
-You are in a monadic context when using [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task#andThen) in Elm.
-
-## `do` notation
-`do` Notation is "syntactic sugar" for chained `>>=`. It removes the need for indentations.
-
-```purs
-foo :: Box Unit
-foo =
-  -- only call `(\x -> ...)` if `getMyInt` actually produces something
-  getMyInt >>= (\x ->
-      let y = x + 4
-      in toString y >>= (\z ->
-        print z
-      )
-    )
-```
-
-is the same as
-
-```purs
-foo :: Box Unit
-foo = do
-  x <- getMyInt
-  let y = x + 4 -- no need to have a corresponding `in` statement
-  z <- toString y
-  print z -- last line must not end with `value <- computation` but just `computation`
-```
-
-## Type Class Deriving
+## Type class deriving
 
 The compiler can derive type class instances to spare you the tedium of writing boilerplate. There are a few ways to do this depending on the specific type and class being derived.
 
@@ -508,6 +442,81 @@ There is a type class in `Prim` called `Warn`. When the compiler solves a `Warn`
 ```purescript
 meaningOfLife :: Warn (Text "`meaningOfLife` result is hardcoded, for now.) => Int
 meaningOfLife = 42
+```
+
+## Applicatives
+
+`<*>` is the infix alias of the *apply* operator defined in the [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Applicative) type class, and is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
+
+```purs
+class Applicative f where
+  pure :: a -> f a
+  (<*>) :: f (a -> b) -> f a -> f b
+```
+
+Applicative lets us perform N operations independently, then it aggregates the results for us.
+You are in an applicative context when using [`Decoder`](https://package.elm-lang.org/packages/elm/json/latest/Json-Decode#map2) in Elm.
+
+### Map alias `<$>`
+
+Often used with `<*>`, the `<$>` operator is alias for `map` but in infix position, meaning that the two are equivalent:
+
+```purs
+map (\n -> n + 1) (Just 5)
+(\n -> n + 1) <$> (Just 5)
+```
+
+## Monads
+
+`>>=` is the infix alias of the *bind* operator defined in the [Monad](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Monad) type class, and is is equivalent to [`|> andThen`](https://package.elm-lang.org/packages/elm/core/latest/Maybe#andThen) in Elm.
+```purs
+class Monad m where
+  (>>=) :: m a -> (a -> m b) -> m b
+```
+
+ The signature is the same as that of Elm’s `Maybe.andThen`, except the arguments are flipped. They are flipped in PureScript because their version is an infix operator:
+
+```elm
+-- Elm
+example : Maybe Int
+example =
+  Just "23" |> Maybe.andThen String.toInt
+```
+
+```purs
+-- PureScript
+example :: Maybe Int
+example =
+  Just "23" >>= readMaybe
+```
+
+Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something “fails” the operation aborts.
+You are in a monadic context when using [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task#andThen) in Elm.
+
+## `do` notation
+`do` Notation is "syntactic sugar" for chained `>>=`. It removes the need for indentations.
+
+```purs
+foo :: Box Unit
+foo =
+  -- only call `(\x -> ...)` if `getMyInt` actually produces something
+  getMyInt >>= (\x ->
+      let y = x + 4
+      in toString y >>= (\z ->
+        print z
+      )
+    )
+```
+
+is the same as
+
+```purs
+foo :: Box Unit
+foo = do
+  x <- getMyInt
+  let y = x + 4 -- no need to have a corresponding `in` statement
+  z <- toString y
+  print z -- last line must not end with `value <- computation` but just `computation`
 ```
 
 ## Foreign Function Interface (FFI)
