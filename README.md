@@ -498,6 +498,7 @@ First, let's write an operator to convert optional inputs into computations whic
 ```purs
 import Data.Either
 
+-- infix operator (used between backticks "`") to convert Maybe to Either String
 withError :: Maybe a -> String -> Either String a
 withError Nothing  err = Left err
 withError (Just a) _   = Right a
