@@ -14,9 +14,8 @@ to generate this file without the comments in this block.
 , dependencies =
   [ "assert"
   , "effect"
+  , "either"
   , "flame"
-  , "foldable-traversable"
-  , "lists"
   , "prelude"
   ]
 , packages = ./packages.dhall

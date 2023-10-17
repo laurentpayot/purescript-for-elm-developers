@@ -11,7 +11,7 @@ Based on information picked from:
 - https://github.com/alpacaaa/zero-bs-haskell
 
 TO DO:
-- https://book.purescript.org/chapter7.html#applicative-validation-1
+- example with Data.AddressBook.Validation module using the V (Array String) applicative functor  https://book.purescript.org/chapter7.html#applicative-validation-1
 - Vite builds for CSS and TS files https://github.com/seastian/purescript-vite-lazy
 
 ## Common packages
