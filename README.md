@@ -503,7 +503,7 @@ withError :: Maybe a -> String -> Either String a
 withError Nothing  err = Left err
 withError (Just a) _   = Right a
 
-fullNameEither :: String -> String -> String -> Either String String
+fullNameEither :: Maybe String -> Maybe String -> Maybe String -> Either String String
 fullNameEither first middle last =
   fullName <$> (first  `withError` "First name was missing")
            <*> (middle `withError` "Middle name was missing")
@@ -519,7 +519,7 @@ fullNameEither (Just "Phillip") Nothing (Just "Freeman") -- (Left "Middle name w
 With the `ado` keyword:
 
 ```purs
-fullNameEither :: String -> String -> String -> Either String String
+fullNameEither :: Maybe String -> Maybe String -> Maybe String -> Either String String
 fullNameEither first middle last = ado
   f <- first  `withError` "First name was missing"
   m <- middle `withError` "Middle name was missing"
