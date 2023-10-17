@@ -1,13 +1,13 @@
 # PureScript from Elm
 
 Based on information picked from:
+- https://github.com/alpacaaa/elm-to-purescript-cheatsheet
 - https://github.com/purescript/documentation
 - https://book.purescript.org
-- https://github.com/alpacaaa/elm-to-purescript-cheatsheet
+- https://jordanmartinez.github.io/purescript-jordans-reference-site/
 - https://learnxinyminutes.com/docs/purescript/
 - https://gist.github.com/justinwoo/0118be3e4a0d7394a99debbde2515f9b
 - https://www.tobyhobson.com/posts/cats/
-- https://jordanmartinez.github.io/purescript-jordans-reference-site/
 - https://github.com/alpacaaa/zero-bs-haskell
 
 TO DO:
