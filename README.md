@@ -365,6 +365,13 @@ showCompare a1 a2 =
   show a1 <> " is equal to " <> show a2
 ```
 
+The implementation of type class instances can depend on other type class instances. Those instances should be grouped in parentheses and separated by commas on the left-hand side of the `=>` symbol:
+
+```purs
+instance (Show a, Show b) => Show (Either a b) where
+  ...
+```
+
 ## Type class deriving
 
 The compiler can derive type class instances to spare you the tedium of writing boilerplate. There are a few ways to do this depending on the specific type and class being derived.
