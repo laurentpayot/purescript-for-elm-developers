@@ -453,6 +453,9 @@ meaningOfLife = 42
 
 ## Applicatives
 
+To *lift* a function means to turn it into a function that works with functor-wrapped arguments. Applicative functors are functors that allow lifting of functions.
+
+
 `<*>` is the infix alias of the *apply* operator defined in the [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Applicative) type class, and is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
 
 ```purs
@@ -472,6 +475,43 @@ Often used with `<*>`, the `<$>` operator is alias for `map` but in infix positi
 map (\n -> n + 1) (Just 5)
 (\n -> n + 1) <$> (Just 5)
 ```
+
+### Decoding examples
+
+```purs
+import Prelude
+import Data.Maybe
+
+fullName :: String -> String -> String -> String
+fullName first middle last = last <> ", " <> first <> " " <> middle
+
+fullName "Phillip" "A" "Freeman" -- "Freeman, Phillip A"
+
+fullName <$> Just "Phillip" <*> Just "A" <*> Just "Freeman" -- Just ("Freeman, Phillip A")
+
+fullName <$> Just "Phillip" <*> Nothing <*> Just "Freeman" -- Nothing
+```
+
+### Applicative `do` notation
+
+```purs
+ado
+  f <- Just "Phillip"
+  m <- Just "A"
+  l <- Just "Freeman"
+  in fullName f m l
+-- (Just "Freeman, Phillip A")
+
+ado
+  f <- Just "Phillip"
+  m <- Nothing
+  l <- Just "Freeman"
+  in fullName f m l
+-- Nothing
+```
+
+<!-- TODO Data.Either -->
+
 
 ## Monads
 
@@ -500,7 +540,8 @@ example =
 Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something “fails” the operation aborts.
 You are in a monadic context when using [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task#andThen) in Elm.
 
-## `do` notation
+### `do` notation
+
 `do` Notation is "syntactic sugar" for chained `>>=`. It removes the need for indentations.
 
 ```purs
