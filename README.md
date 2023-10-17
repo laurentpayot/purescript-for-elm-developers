@@ -157,13 +157,28 @@ Tuple x y = coords
 ## Records
 
 ```purs
-type Person = { name :: String, age :: Int }
+type Person =
+  { name :: String
+  , age :: Int
+  }
 
 myPerson :: Person
 myPerson = { name: "Bob", age: 30 }
 
 edited :: Person
 edited = { myPerson | age = 31 }
+
+toPerson :: String -> Int -> Person
+toPerson name age =
+  { name: name, age: age }
+
+toPerson2 :: String -> Int -> Person
+toPerson2 name age =
+  { name, age }
+
+toPerson3 :: String -> Int -> Person
+toPerson3 =
+  { name: _, age: _ } -- equivalent to `\name age -> { name, age }` (types inferred by the signature)
 ```
 
 ### Property Accessors
