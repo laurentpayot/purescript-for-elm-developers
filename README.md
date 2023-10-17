@@ -11,7 +11,7 @@ Based on information picked from:
 - https://github.com/alpacaaa/zero-bs-haskell
 
 TO DO:
-- https://book.purescript.org/chapter7.html
+- https://book.purescript.org/chapter7.html#applicative-validation-1
 - Vite builds for CSS and TS files https://github.com/seastian/purescript-vite-lazy
 
 ## Common packages
@@ -454,7 +454,6 @@ meaningOfLife = 42
 ## Applicatives
 
 To *lift* a function means to turn it into a function that works with functor-wrapped arguments. Applicative functors are functors that allow lifting of functions.
-
 
 `<*>` is the infix alias of the *apply* operator defined in the [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Applicative) type class, and is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
 
