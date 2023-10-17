@@ -492,26 +492,39 @@ fullName <$> Just "Phillip" <*> Just "A" <*> Just "Freeman" -- Just ("Freeman, P
 fullName <$> Just "Phillip" <*> Nothing <*> Just "Freeman" -- Nothing
 ```
 
-### Applicative `do` notation
+Instead of lifting over `Maybe`, we can lift over `Either String`, which allows us to return an error message.
+First, let's write an operator to convert optional inputs into computations which can signal an error using `Either String`:
 
 ```purs
-ado
-  f <- Just "Phillip"
-  m <- Just "A"
-  l <- Just "Freeman"
-  in fullName f m l
--- (Just "Freeman, Phillip A")
+import Data.Either
 
-ado
-  f <- Just "Phillip"
-  m <- Nothing
-  l <- Just "Freeman"
-  in fullName f m l
--- Nothing
+withError :: Maybe a -> String -> Either String a
+withError Nothing  err = Left err
+withError (Just a) _   = Right a
+
+fullNameEither :: String -> String -> String -> Either String String
+fullNameEither first middle last =
+  fullName <$> (first  `withError` "First name was missing")
+           <*> (middle `withError` "Middle name was missing")
+           <*> (last   `withError` "Last name was missing")
+
+fullNameEither (Just "Phillip") (Just "A") (Just "Freeman") -- (Right "Freeman, Phillip A")
+
+fullNameEither (Just "Phillip") Nothing (Just "Freeman") -- (Left "Middle name was missing")
 ```
 
-<!-- TODO Data.Either -->
+### Applicative do notation
 
+With the `ado` keyword:
+
+```purs
+fullNameEither :: String -> String -> String -> Either String String
+fullNameEither first middle last = ado
+  f <- first  `withError` "First name was missing"
+  m <- middle `withError` "Middle name was missing"
+  l <- last   `withError` "Last name was missing"
+  in fullName f m l
+```
 
 ## Monads
 
@@ -540,9 +553,9 @@ example =
 Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something “fails” the operation aborts.
 You are in a monadic context when using [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task#andThen) in Elm.
 
-### `do` notation
+### Monad do notation
 
-`do` Notation is "syntactic sugar" for chained `>>=`. It removes the need for indentations.
+The `do` keyword is "syntactic sugar" for chained `>>=`. It removes the need for indentations.
 
 ```purs
 foo :: Box Unit
