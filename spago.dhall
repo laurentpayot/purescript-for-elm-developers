@@ -20,5 +20,5 @@ to generate this file without the comments in this block.
   , "prelude"
   ]
 , packages = ./packages.dhall
-, sources = [ "src/purs/**/*.purs", "tests/purs/**/*.purs" ]
+, sources = [ "src/ps/**/*.purs", "tests/ps/**/*.purs" ]
 }
