@@ -4,7 +4,7 @@ import Prelude
 
 import Effect (Effect)
 import Flame (Html, QuerySelector(..), Subscription)
--- Side effects free updating; see docs for other examples
+-- Side effects free updating; see docs for other treatmmment
 import Flame.Application.NoEffects as FAN
 import Flame.Html.Element as HE
 import Flame.Html.Attribute as HA
