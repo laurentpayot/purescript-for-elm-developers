@@ -11,6 +11,7 @@
         "dhall"
     ],
     "cSpell.words": [
-        "Dhall"
+        "Dhall",
+        "Semigroup"
     ],
 }

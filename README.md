@@ -490,7 +490,9 @@ map (\n -> n + 1) (Just 5)
 (\n -> n + 1) <$> (Just 5)
 ```
 
-### Decoding examples
+### Applicative validation
+
+Let’s lift `fullName` over a `Maybe`:
 
 ```purs
 import Prelude
@@ -506,10 +508,10 @@ fullName <$> Just "Phillip" <*> Just "A" <*> Just "Freeman" -- Just ("Freeman, P
 fullName <$> Just "Phillip" <*> Nothing <*> Just "Freeman" -- Nothing
 ```
 
-Instead of lifting over `Maybe`, we can lift over `Either String`, which allows us to return an error message.
-First, let's write an operator to convert optional inputs into computations which can signal an error using `Either String`:
+Just like with `Maybe`, if we lift `fullName` over `Either String`, we get a unique error even if multiple errors occur:
 
 ```purs
+import Prelude
 import Data.Either
 
 -- infix operator (used between backticks "`") to convert Maybe to Either String
@@ -525,8 +527,34 @@ fullNameEither first middle last =
 
 fullNameEither (Just "Phillip") (Just "A") (Just "Freeman") -- (Right "Freeman, Phillip A")
 
-fullNameEither (Just "Phillip") Nothing (Just "Freeman") -- (Left "Middle name was missing")
+fullNameEither (Just "Phillip") Nothing Nothing -- (Left "Middle name was missing")
 ```
+
+To get an array of all the errors we can use the `V` functor of [`Data.Validation.Semigroup`](https://pursuit.purescript.org/packages/purescript-validation/6.0.0/docs/Data.Validation.Semigroup) that it allows us to collect multiple errors using an arbitrary semigroup (`Array Error`)
+
+```purs
+type Errors
+  = Array String
+
+nonEmpty :: String -> String -> V Errors String
+nonEmpty label ""     = invalid [ "Field '" <> label <> "' cannot be empty" ]
+nonEmpty _     value  = pure value
+
+validateFullName :: Address -> V Errors Address
+validateFullName a =
+  fullName <$> nonEmpty "First name" a.first
+           <*> nonEmpty "Middle name" a.middle
+           <*> nonEmpty "Last name" a.last
+```
+<!-- TODO use { first: _, middle: _, last: _ } like in
+
+validate :: Person -> V (Array Error) Person
+validate person = { first: _, last: _, email: _ }
+  <$> validateName person.first
+  <*> validateName person.last
+  <*> validateEmail person.email
+
+ -->
 
 ### Applicative do notation
 
