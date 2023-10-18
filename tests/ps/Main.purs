@@ -11,6 +11,11 @@ import Effect (Effect)
 import Test.Assert (assert)
 import Data.Either (Either(..))
 
+newtype Score = Score Int
+
+derive newtype instance Semiring Score
+derive newtype instance Eq Score
+
 type Contact =
   { firstName :: String
   , lastName :: String
@@ -49,6 +54,8 @@ badContact = toContact "" "" { street: "123 Main St.", city: "Anytown", country:
 
 main :: Effect Unit
 main = do
+
+  assert $ (Score 4) + (Score 6) == (Score 10)
 
   -- applicative validation example testing
 
