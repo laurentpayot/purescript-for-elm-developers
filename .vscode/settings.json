@@ -6,9 +6,8 @@
     "[purescript]": {
         "editor.formatOnSave": true
     },
-    "cSpell.words": [
-        "dhall",
-        "spago",
-        "Semiring",
+    "cSpell.enableFiletypes": [
+        "purs",
+        "dhall"
     ],
 }
