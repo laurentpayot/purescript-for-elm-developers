@@ -11,7 +11,7 @@ Based on information picked from:
 - https://github.com/alpacaaa/zero-bs-haskell
 
 TO DO
-- Instead of dynamic import example use Vite config like in https://stackoverflow.com/questions/69626090/how-to-watch-public-directory-in-vite-project-for-hot-reload (https://marketplace.visualstudio.com/items/nwolverson.ide-purescript is building when saving in VS code)
+- see if HMR possible with https://stackoverflow.com/questions/69626090/how-to-watch-public-directory-in-vite-project-for-hot-reload
 
 ## Common packages
 
@@ -830,10 +830,9 @@ runExcept (map unNullOrUndefined <$> decodeJSON "[1, 2, null]" :: F (Array (Null
 - Performance comparable to native JavaScript frameworks – see [benchmarks](https://flame.asafe.dev/benchmarks)
 - Parse HTML into Flame markup with [breeze](https://github.com/easafe/haskell-breeze)
 
-## Vite plugin
+## Vite setup
 
-A [Vite plugin](https://github.com/seastian/purescript-vite-lazy/blob/main/vite.config.js) by
-Sebastián Aberastury is available, with [lazy loading capabilities](https://discourse.purescript.org/t/lazy-loading-routes-in-tea-style-app/141/18).
+When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/items/nwolverson.ide-purescript) the project is built every time you save a file. There is no need for a special Vite plugin. Just import `output/Main/index.js` in your Vite `main.js` file.
 
 ## Purescript counter web app
 
