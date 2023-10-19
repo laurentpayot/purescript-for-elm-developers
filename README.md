@@ -71,8 +71,6 @@ foo = 1 + ?what_could_this_be
 
 ## Arrays
 
-<!-- TODO make this just like the Lists section -->
-
 ```purs
 myArray = [2,4,3]
 
@@ -197,6 +195,17 @@ personName { name } = name
 bumpAge :: Person -> Person
 bumpAge p@{ age } =
 	p { age = age + 1 }
+```
+### Pattern matching
+
+```purs
+ecoTitle {author: "Umberto Eco", title: t} = Just t
+ecoTitle _ = Nothing
+
+ecoTitle {title: "Foucault's pendulum", author: "Umberto Eco"} -- (Just "Foucault's pendulum")
+ecoTitle {title: "The Quantum Thief", author: "Hannu Rajaniemi"} -- Nothing
+-- ecoTitle requires both field to type check
+ecoTitle {title: "The Quantum Thief"} -- Object lacks required property "author"
 ```
 
 ### Row Polymorphism
