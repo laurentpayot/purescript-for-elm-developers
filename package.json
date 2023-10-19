@@ -16,7 +16,7 @@
     "test": "spago test",
     "start": "vite",
     "build": "vite build",
-    "serve": "python3 -m http.server 5000",
+    "serve": "cd dist && python3 -m http.server 5000",
     "do-update": "pnpm update --recursive --latest"
   },
   "devDependencies": {
