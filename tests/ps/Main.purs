@@ -1,8 +1,4 @@
-module Test.Main
-  ( Address
-  , Contact
-  , main
-  ) where
+module Test.Main (main) where
 
 import Prelude
 
@@ -28,6 +24,20 @@ type Address =
   , country :: String
   }
 
+goodContact :: Contact
+goodContact =
+  { firstName: "John"
+  , lastName: "Doe"
+  , address:
+      { street: "123 Main St."
+      , city: "Springfield"
+      , country: "USA"
+      }
+  }
+
+badContact :: Contact
+badContact = goodContact { firstName = "", lastName = "" }
+
 nonEmptyEither :: String -> String -> Either String String
 nonEmptyEither fieldName "" = Left $ "Field '" <> fieldName <> "' cannot be empty"
 nonEmptyEither _ value = Right value
@@ -50,27 +60,12 @@ validateContactV c = { firstName: _, lastName: _, address: _ }
   <*> nonEmptyV "Last Name" c.lastName
   <*> pure c.address
 
-goodContact :: Contact
-goodContact =
-  { firstName: "John"
-  , lastName: "Doe"
-  , address:
-      { street: "123 Main St."
-      , city: "Springfield"
-      , country: "USA"
-      }
-  }
-
-badContact :: Contact
-badContact =
-  { firstName: ""
-  , lastName: ""
-  , address:
-      { street: "123 Main St."
-      , city: "Springfield"
-      , country: "USA"
-      }
-  }
+validateContactVAdo :: Contact -> V ErrorMessages Contact
+validateContactVAdo c = ado
+  firstName <- nonEmptyV "First Name" c.firstName
+  lastName <- nonEmptyV "Last Name" c.lastName
+  address <- pure c.address
+  in { firstName, lastName, address }
 
 main :: Effect Unit
 main = do
@@ -90,6 +85,16 @@ main = do
   assert $ not isValid $ validateContactV badContact
 
   assert $ validateContactV badContact ==
+    invalid
+      [ "Field 'First Name' cannot be empty"
+      , "Field 'Last Name' cannot be empty"
+      ]
+
+  assert $ isValid $ validateContactVAdo goodContact
+
+  assert $ not isValid $ validateContactVAdo badContact
+
+  assert $ validateContactVAdo badContact ==
     invalid
       [ "Field 'First Name' cannot be empty"
       , "Field 'Last Name' cannot be empty"

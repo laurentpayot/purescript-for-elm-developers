@@ -166,7 +166,7 @@ myPerson :: Person
 myPerson = { name: "Bob", age: 30 }
 
 edited :: Person
-edited = { myPerson | age = 31 }
+edited = myPerson { age = 31 }
 
 toPerson :: String -> Int -> Person
 toPerson name age =
@@ -508,65 +508,89 @@ fullName <$> Just "Phillip" <*> Just "A" <*> Just "Freeman" -- Just ("Freeman, P
 fullName <$> Just "Phillip" <*> Nothing <*> Just "Freeman" -- Nothing
 ```
 
-Just like with `Maybe`, if we lift `fullName` over `Either String`, we get a unique error even if multiple errors occur:
+Just like with `Maybe`, if we lift `fullName` over `Either String String`, we get a unique error even if multiple errors occur:
 
 ```purs
-import Prelude
-import Data.Either
+import Test.Assert (assert)
+import Data.Either (Either(..))
 
--- infix operator (used between backticks "`") to convert Maybe to Either String
-withError :: Maybe a -> String -> Either String a
-withError Nothing  err = Left err
-withError (Just a) _   = Right a
+type Contact =
+  { firstName :: String
+  , lastName :: String
+  , address :: Address
+  }
 
-fullNameEither :: Maybe String -> Maybe String -> Maybe String -> Either String String
-fullNameEither first middle last =
-  fullName <$> (first  `withError` "First name was missing")
-           <*> (middle `withError` "Middle name was missing")
-           <*> (last   `withError` "Last name was missing")
+type Address =
+  { street :: String
+  , city :: String
+  , country :: String
+  }
 
-fullNameEither (Just "Phillip") (Just "A") (Just "Freeman") -- (Right "Freeman, Phillip A")
+goodContact :: Contact
+goodContact =
+  { firstName: "John"
+  , lastName: "Doe"
+  , address:
+      { street: "123 Main St."
+      , city: "Springfield"
+      , country: "USA"
+      }
+  }
 
-fullNameEither (Just "Phillip") Nothing Nothing -- (Left "Middle name was missing")
+badContact :: Contact
+badContact = goodContact { firstName = "", lastName = "" }
+
+nonEmptyEither :: String -> String -> Either String String
+nonEmptyEither fieldName "" = Left $ "Field '" <> fieldName <> "' cannot be empty"
+nonEmptyEither _ value = Right value
+
+validateContactEither :: Contact -> Either String Contact
+validateContactEither c = { firstName: _, lastName: _, address: _ }
+  <$> nonEmptyEither "First Name" c.firstName
+  <*> nonEmptyEither "Last Name" c.lastName
+  <*> pure c.address
+
+assert $ validateContactEither goodContact == Right goodContact
+assert $ validateContactEither badContact ==  Left "Field 'First Name' cannot be empty"
 ```
 
-To get an array of all the errors we can use the `V` functor of [`Data.Validation.Semigroup`](https://pursuit.purescript.org/packages/purescript-validation/6.0.0/docs/Data.Validation.Semigroup) that it allows us to collect multiple errors using an arbitrary semigroup (`Array Error`)
+To get an array of all the errors we can use the `V` functor of [`Data.Validation.Semigroup`](https://pursuit.purescript.org/packages/purescript-validation/6.0.0/docs/Data.Validation.Semigroup) that it allows us to collect multiple errors using an arbitrary semigroup (such as `Array String` in the example below).
 
 ```purs
-type Errors
-  = Array String
+import Data.Validation.Semigroup (V, invalid, isValid)
 
-nonEmpty :: String -> String -> V Errors String
-nonEmpty label ""     = invalid [ "Field '" <> label <> "' cannot be empty" ]
-nonEmpty _     value  = pure value
+type ErrorMessages = Array String
 
-validateFullName :: Address -> V Errors Address
-validateFullName a =
-  fullName <$> nonEmpty "First name" a.first
-           <*> nonEmpty "Middle name" a.middle
-           <*> nonEmpty "Last name" a.last
+nonEmptyV :: String -> String -> V ErrorMessages String
+nonEmptyV fieldName "" = invalid [ "Field '" <> fieldName <> "' cannot be empty" ]
+nonEmptyV _ value = pure value
+
+validateContactV :: Contact -> V ErrorMessages Contact
+validateContactV c = { firstName: _, lastName: _, address: _ }
+  <$> nonEmptyV "First Name" c.firstName
+  <*> nonEmptyV "Last Name" c.lastName
+  <*> pure c.address
+
+assert $ isValid $ validateContactV goodContact
+assert $ not isValid $ validateContactV badContact
+assert $ validateContactV badContact ==
+  invalid
+    [ "Field 'First Name' cannot be empty"
+    , "Field 'Last Name' cannot be empty"
+    ]
 ```
-<!-- TODO use { first: _, middle: _, last: _ } like in
-
-validate :: Person -> V (Array Error) Person
-validate person = { first: _, last: _, email: _ }
-  <$> validateName person.first
-  <*> validateName person.last
-  <*> validateEmail person.email
-
- -->
 
 ### Applicative do notation
 
 With the `ado` keyword:
 
 ```purs
-fullNameEither :: Maybe String -> Maybe String -> Maybe String -> Either String String
-fullNameEither first middle last = ado
-  f <- first  `withError` "First name was missing"
-  m <- middle `withError` "Middle name was missing"
-  l <- last   `withError` "Last name was missing"
-  in fullName f m l
+validateContactVAdo :: Contact -> V ErrorMessages Contact
+validateContactVAdo c = ado
+  fistName <- nonEmptyV "First Name" c.firstName
+  lastName <- nonEmptyV "Last Name" c.lastName
+  address <- pure c.address
+  in { firstName, lastName, address }
 ```
 
 ## Monads
