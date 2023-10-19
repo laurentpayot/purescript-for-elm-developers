@@ -11,7 +11,7 @@ Based on information picked from:
 - https://github.com/alpacaaa/zero-bs-haskell
 
 TO DO
-- Instead of dynamic import example use Vite config https://stackoverflow.com/questions/69626090/how-to-watch-public-directory-in-vite-project-for-hot-reload
+- Instead of dynamic import example use Vite config like in https://stackoverflow.com/questions/69626090/how-to-watch-public-directory-in-vite-project-for-hot-reload (https://marketplace.visualstudio.com/items/nwolverson.ide-purescript is building when saving in VS code)
 
 ## Common packages
 
