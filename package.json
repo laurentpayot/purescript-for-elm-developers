@@ -16,10 +16,11 @@
     "test": "spago test",
     "build:html": "cp src/index.html dist/",
     "build": "spago bundle-app --to dist/index.js --minify --then 'pnpm --silent build:html'",
-    "start": "spago bundle-app --to dist/index.js --watch --source-maps --clear-screen --then 'pnpm --silent build:html'"
+    "start": "spago bundle-app --to dist/index.js --watch --source-maps --clear-screen --then 'pnpm --silent build:html'",
+    "do-update": "pnpm update --recursive --latest"
   },
   "devDependencies": {
-    "esbuild": "^0.19.4",
+    "esbuild": "^0.19.5",
     "purescript": "^0.15.12",
     "purs-tidy": "^0.10.0",
     "spago": "^0.21.0"
