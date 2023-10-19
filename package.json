@@ -11,18 +11,21 @@
   ],
   "author": "Laurent Payot",
   "license": "MIT",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "spago test",
     "build:html": "cp src/index.html dist/",
-    "build": "spago bundle-app --to dist/index.js --minify --then 'pnpm --silent build:html'",
-    "start": "spago bundle-app --to dist/index.js --watch --source-maps --clear-screen --then 'pnpm --silent build:html'",
+    "build:spago": "spago bundle-app --to dist/index.js --minify --then 'pnpm --silent build:html'",
+    "start:spago": "spago bundle-app --to dist/index.js --watch --source-maps --clear-screen --then 'pnpm --silent build:html'",
+    "start": "vite",
+    "build": "vite build",
     "do-update": "pnpm update --recursive --latest"
   },
   "devDependencies": {
     "esbuild": "^0.19.5",
     "purescript": "^0.15.12",
     "purs-tidy": "^0.10.0",
-    "spago": "^0.21.0"
+    "spago": "^0.21.0",
+    "vite": "^4.5.0"
   }
 }
