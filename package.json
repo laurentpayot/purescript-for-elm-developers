@@ -14,12 +14,10 @@
   "type": "module",
   "scripts": {
     "test": "spago test",
-    "build:html": "cp src/index.html dist/",
-    "build:spago": "spago bundle-app --to dist/index.js --minify --then 'pnpm --silent build:html'",
-    "start:spago": "spago bundle-app --to dist/index.js --watch --source-maps --clear-screen --then 'pnpm --silent build:html'",
     "start": "vite",
     "build": "vite build",
-    "do-update": "pnpm update --recursive --latest"
+    "do-update": "pnpm update --recursive --latest",
+    "serve": "python3 -m http.server 5000"
   },
   "devDependencies": {
     "esbuild": "^0.19.5",
