@@ -16,8 +16,8 @@
     "test": "spago test",
     "start": "vite",
     "build": "vite build",
-    "do-update": "pnpm update --recursive --latest",
-    "serve": "python3 -m http.server 5000"
+    "serve": "python3 -m http.server 5000",
+    "do-update": "pnpm update --recursive --latest"
   },
   "devDependencies": {
     "esbuild": "^0.19.5",
