@@ -10,9 +10,6 @@ Based on information picked from:
 - https://www.tobyhobson.com/posts/cats/
 - https://github.com/alpacaaa/zero-bs-haskell
 
-TO DO:
-- Vite builds for CSS and TS files https://github.com/seastian/purescript-vite-lazy
-
 ## Common packages
 
 | **Elm**                                  | **Purescript**                           | **Notes**                                |
@@ -829,6 +826,11 @@ runExcept (map unNullOrUndefined <$> decodeJSON "[1, 2, null]" :: F (Array (Null
 - Server side rendering – see [Rendering the app](https://flame.asafe.dev/rendering)
 - Performance comparable to native JavaScript frameworks – see [benchmarks](https://flame.asafe.dev/benchmarks)
 - Parse HTML into Flame markup with [breeze](https://github.com/easafe/haskell-breeze)
+
+## Vite plugin
+
+A [Vite plugin](https://github.com/seastian/purescript-vite-lazy/blob/main/vite.config.js) by
+Sebastián Aberastury is available, with [lazy loading capabilities](https://discourse.purescript.org/t/lazy-loading-routes-in-tea-style-app/141/18).
 
 ## Purescript counter web app
 
