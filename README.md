@@ -178,12 +178,13 @@ toPerson3 =
   { name: _, age: _ } -- equivalent to `\name age -> { name, age }` (types inferred by the signature)
 ```
 
-### Property Accessors
+### Property accessors
+
+In PureScript `(_ + 5)` is the same as `(\n -> n + 5)`, so `(_.prop)` is the same as `(\r -> r.prop)`.
 
 ```purs
 _.age myPerson -- 30
 _.address.street myPerson -- "Main Street"
-
 ```
 
 ### Destructuring
@@ -243,12 +244,6 @@ foo arg1 arg2 =
     baz :: String -> String
     baz s = "Hi " <> s <> "! "
 ```
-
-## Underscore in lambdas
-
-The underscore symbol `_` can be used in functions when you don't want to give the parameter a name.
-
-`(_ + 10)` is the same as `(\n -> n + 10)`
 
 ## Guards
 
