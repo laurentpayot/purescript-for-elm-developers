@@ -11,7 +11,8 @@ Based on information picked from:
 - https://github.com/alpacaaa/zero-bs-haskell
 
 TO DO
-- see if HMR possible with https://stackoverflow.com/questions/69626090/how-to-watch-public-directory-in-vite-project-for-hot-reload
+- JSON decoding
+- Separate Layout page
 
 ## Common packages
 
