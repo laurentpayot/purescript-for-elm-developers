@@ -10,6 +10,9 @@ Based on information picked from:
 - https://www.tobyhobson.com/posts/cats/
 - https://github.com/alpacaaa/zero-bs-haskell
 
+TO DO
+- Instead of dynamic import example use Vite config https://stackoverflow.com/questions/69626090/how-to-watch-public-directory-in-vite-project-for-hot-reload
+
 ## Common packages
 
 | **Elm**                                  | **Purescript**                           | **Notes**                                |
