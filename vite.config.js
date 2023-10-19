@@ -13,7 +13,7 @@ export default defineConfig({
         emptyOutDir: true,
         target: 'es2022', // ES2022 allowed for terser v5.16+ https://github.com/vitejs/vite/pull/12197
 
-        minify: 'terser', // using terser as esbuild does not support pure functions optimizations for elm https://github.com/evanw/esbuild/issues/731#issuecomment-770564592
+        minify: 'terser', // using terser as esbuild does not support pure functions optimizations https://github.com/evanw/esbuild/issues/731#issuecomment-770564592
         terserOptions: {
             format: {
                 comments: false
