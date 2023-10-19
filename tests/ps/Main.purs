@@ -1,7 +1,6 @@
 module Test.Main
   ( Address
   , Contact
-  , toContact
   , main
   ) where
 
@@ -10,6 +9,7 @@ import Prelude
 import Effect (Effect)
 import Test.Assert (assert)
 import Data.Either (Either(..))
+import Data.Validation.Semigroup (V, invalid, isValid)
 
 newtype Score = Score Int
 
@@ -28,29 +28,49 @@ type Address =
   , country :: String
   }
 
--- Contact constructor
-toContact :: String -> String -> Address -> Contact
-toContact firstName lastName address =
-  { firstName
-  , lastName
-  , address
-  }
+nonEmptyEither :: String -> String -> Either String String
+nonEmptyEither fieldName "" = Left $ "Field '" <> fieldName <> "' cannot be empty"
+nonEmptyEither _ value = Right value
 
-nonEmpty :: String -> Either String String
-nonEmpty "" = Left "Field cannot be empty"
-nonEmpty value = Right value
+validateContactEither :: Contact -> Either String Contact
+validateContactEither c = { firstName: _, lastName: _, address: _ }
+  <$> nonEmptyEither "First Name" c.firstName
+  <*> nonEmptyEither "Last Name" c.lastName
+  <*> pure c.address
 
-validateContact :: Contact -> Either String Contact
-validateContact c = toContact
-  <$> nonEmpty c.firstName
-  <*> nonEmpty c.lastName
+type ErrorMessages = Array String
+
+nonEmptyV :: String -> String -> V ErrorMessages String
+nonEmptyV fieldName "" = invalid [ "Field '" <> fieldName <> "' cannot be empty" ]
+nonEmptyV _ value = pure value
+
+validateContactV :: Contact -> V ErrorMessages Contact
+validateContactV c = { firstName: _, lastName: _, address: _ }
+  <$> nonEmptyV "First Name" c.firstName
+  <*> nonEmptyV "Last Name" c.lastName
   <*> pure c.address
 
 goodContact :: Contact
-goodContact = toContact "John" "Doe" { street: "123 Main St.", city: "Anytown", country: "USA" }
+goodContact =
+  { firstName: "John"
+  , lastName: "Doe"
+  , address:
+      { street: "123 Main St."
+      , city: "Springfield"
+      , country: "USA"
+      }
+  }
 
 badContact :: Contact
-badContact = toContact "" "" { street: "123 Main St.", city: "Anytown", country: "USA" }
+badContact =
+  { firstName: ""
+  , lastName: ""
+  , address:
+      { street: "123 Main St."
+      , city: "Springfield"
+      , country: "USA"
+      }
+  }
 
 main :: Effect Unit
 main = do
@@ -59,8 +79,18 @@ main = do
 
   -- applicative validation example testing
 
-  assert $
-    validateContact goodContact == Right { firstName: "John", lastName: "Doe", address: { street: "123 Main St.", city: "Anytown", country: "USA" } }
+  assert $ validateContactEither goodContact ==
+    Right goodContact
 
-  assert $
-    validateContact badContact == Left "Field cannot be empty"
+  assert $ validateContactEither badContact ==
+    Left "Field 'First Name' cannot be empty"
+
+  assert $ isValid $ validateContactV goodContact
+
+  assert $ not isValid $ validateContactV badContact
+
+  assert $ validateContactV badContact ==
+    invalid
+      [ "Field 'First Name' cannot be empty"
+      , "Field 'Last Name' cannot be empty"
+      ]

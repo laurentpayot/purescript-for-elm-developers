@@ -12,12 +12,7 @@ to generate this file without the comments in this block.
 -}
 { name = "purescript-counter-web-app"
 , dependencies =
-  [ "assert"
-  , "effect"
-  , "either"
-  , "flame"
-  , "prelude"
-  ]
+  [ "assert", "effect", "either", "flame", "prelude", "validation" ]
 , packages = ./packages.dhall
 , sources = [ "src/ps/**/*.purs", "tests/ps/**/*.purs" ]
 }
