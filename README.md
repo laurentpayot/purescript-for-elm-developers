@@ -11,6 +11,7 @@ Based on information picked from:
 - https://github.com/alpacaaa/zero-bs-haskell
 
 TO DO
+- Data.Generic.Rep deprecated (moved to Prelude etc.) see https://pursuit.purescript.org/packages/purescript-generics-rep/6.1.4 and write tests + modify the "Classes with built-in compiler support" section
 - JSON decoding
 - Separate Layout page
 
@@ -437,7 +438,7 @@ Since PureScript version 0.15.0, giving class instances a name (for generated co
 
 ### Classes with built-in compiler support
 
-Some classes have special built-in compiler support, and their instances can be derived from all types.
+Some classes have special built-in support (such as `Eq`), and their instances can be derived from all types.
 
 For example, if you you'd like to be able to remove duplicates from an array of an ADT using `nub`, you need an `Eq` and `Ord` instance. Rather than writing these manually, let the compiler do the work.
 
@@ -456,7 +457,7 @@ nub [Some, Arbitrary 1, Some, Some] == [Some, Arbitrary 1]
 ```
 
 Currently, instances for the following classes can be derived by the compiler:
-- Data.Generic.Rep (class Generic) [see below](../guides/Type-Class-Deriving.md#deriving-from-generic)
+- Data.Generic.Rep (class Generic) [see below](#deriving-from-generic)
 - [Data.Eq (class Eq)](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Eq#t:Eq)
 - [Data.Ord (class Ord)](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Ord#t:Ord)
 - [Data.Functor (class Functor)](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Functor#t:Functor)
@@ -502,7 +503,23 @@ printAddress address = Console.log (un Address address)
 
 ### Deriving from `Generic`
 
-See the [official guide](https://github.com/purescript/documentation/blob/master/guides/Type-Class-Deriving.md#deriving-from-generic).
+<!-- TODO Data.Generic.Rep deprecated (moved to Prelude etc.) see https://pursuit.purescript.org/packages/purescript-generics-rep/6.1.4  and write tests -->
+
+For type classes without build-in support for deriving (such as `Show`) and for types other than newtypes where newtype deriving cannot be used, you can derive from `Generic` if the author of the type class library has implemented a generic version.
+
+```purs
+import Data.Generic.Rep (class Generic)
+import Data.Show.Generic (genericShow)
+import Effect.Console (logShow)
+
+derive instance Generic MyADT _
+
+instance Show MyADT where
+  show = genericShow
+
+-- logs `[Some,(Arbitrary 1),(Contents 2.0 "Three")]`
+main = logShow [Some, Arbitrary 1, Contents 2.0 "Three"]
+```
 
 ## The Warn type class
 
