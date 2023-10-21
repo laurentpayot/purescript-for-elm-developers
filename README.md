@@ -348,8 +348,7 @@ newtype LastName = LastName String
 newtype FullName = FullName String
 ```
 
-Newtypes are especially useful when dealing with raw data as you can write a "validation" function (*smart constructor*) and not expose the type constructor itself in exports.
-This is known as the [opaque type](https://sporto.github.io/elm-patterns/advanced/opaque-types.html) pattern, and is not limited to newtypes.
+Newtypes are especially useful when dealing with raw data as you can write a "validation" function without exposing the type constructor itself in exports. This is known as the [*smart constructor*](https://github.com/JordanMartinez/purescript-jordans-reference/blob/latestRelease/31-Design-Patterns/01-Smart-Constructors.md) pattern:
 
 ```purs
 module Password
