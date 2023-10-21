@@ -300,32 +300,73 @@ type Time       = Int
 
 ## Newtypes
 
-Newtypes are like data types (which are introduced with the `data` keyword), but are restricted to a single constructor which contains a single argument.
+Instead of
 
 ```purs
-newtype Password = Password String
+fullName :: String -> String -> String
+fullName firstName lastName =
+  firstName <> " " <> lastName
+
+fullName "Phillip" "Freeman" -- "Phillip Freeman"
+fullName "Freeman" "Phillip" -- "Freeman Phillip" wrong order!
+```
+
+we could write more explicit types but that would not prevent arguments ordering errors:
+
+```purs
+type FirstName = String
+type LastName = String
+type FullName = String
+
+fullName :: FirstName -> LastName -> FullName
+fullName firstName lastName =
+  firstName <> " " <> lastName
+
+fullName "Phillip" "Freeman" -- "Phillip Freeman"
+fullName "Freeman" "Phillip" -- "Freeman Phillip" still wrong order!
+```
+
+Instead can use single constructor data types and destructure them to ensure the right arguments are provided:
+```purs
+data FirstName = FirstName String
+data LastName = LastName String
+data FullName = FullName String
+
+fullName :: FirstName -> LastName -> FullName
+fullName (FirstName firstName) (LastName lastName) =
+  firstName <> " " <> lastName
+
+fullName (FirstName "Phillip") (LastName "Freeman") -- "Phillip Freeman"
+fullName (LastName "Freeman") (FirstName "Phillip") -- compiler error!
+```
+
+For the compiler to optimize the output for this common pattern, it is even better to use the `newtype` keyword which is especially restricted to a single constructor which contains a single argument.
+
+```purs
+newtype FirstName = FirstName String
+newtype LastName = LastName String
+newtype FullName = FullName String
 ```
 
 Newtypes are especially useful when dealing with raw data as you can write a "validation" function (*smart constructor*) and not expose the type constructor itself in exports.
-This is known as the [opaque type](https://sporto.github.io/elm-patterns/advanced/opaque-types.html) pattern in Elm.
+This is known as the [opaque type](https://sporto.github.io/elm-patterns/advanced/opaque-types.html) pattern, and is not limited to newtypes.
 
 ```purs
 module Password
   ( Password -- not Password(..) to prevent exposing the constructor Password
-  , fromString
+  , toPassword
   ) where
 
 newtype Password = Password String
 
-fromString :: String -> Either Error Password
-fromString =
-  if length password >= 6 then
-    Right password
+toPassword :: String -> Either String Password
+toPassword str =
+  if length str >= 6 then
+    Right (Password str)
   else
     Left "Size should be at least 6"
 
-myPassword = fromString "123456"
-
+myPassword = toPassword "123456"
 ```
 
 There are many useful methods available for working with newtypes using the [Newtype](https://pursuit.purescript.org/packages/purescript-newtype/) package.
