@@ -537,7 +537,7 @@ map (\n -> n + 1) (Just 5)
 
 ### Applicative validation
 
-Let’s lift `fullName` over a `Maybe`:
+Let’s lift the function `fullName` over a `Maybe`:
 
 ```purs
 import Prelude
@@ -586,7 +586,7 @@ badContact :: Contact
 badContact = goodContact { firstName = "", lastName = "" }
 
 nonEmptyEither :: String -> String -> Either String String
-nonEmptyEither fieldName "" = Left $ "Field '" <> fieldName <> "' cannot be empty"
+nonEmptyEither label "" = Left $ "Field '" <> label <> "' cannot be empty"
 nonEmptyEither _ value = Right value
 
 validateContactEither :: Contact -> Either String Contact
@@ -607,7 +607,7 @@ import Data.Validation.Semigroup (V, invalid, isValid)
 type ErrorMessages = Array String
 
 nonEmptyV :: String -> String -> V ErrorMessages String
-nonEmptyV fieldName "" = invalid [ "Field '" <> fieldName <> "' cannot be empty" ]
+nonEmptyV label "" = invalid [ "Field '" <> label <> "' cannot be empty" ]
 nonEmptyV _ value = pure value
 
 validateContactV :: Contact -> V ErrorMessages Contact
