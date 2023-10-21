@@ -353,7 +353,7 @@ This is known as the [opaque type](https://sporto.github.io/elm-patterns/advance
 
 ```purs
 module Password
-  ( Password -- not Password(..) to prevent exposing the constructor Password
+  ( Password -- not Password(..) to prevent exposing the Password constructor
   , toPassword
   ) where
 
