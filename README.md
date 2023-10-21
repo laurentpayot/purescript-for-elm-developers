@@ -368,8 +368,6 @@ toPassword str =
 myPassword = toPassword "123456"
 ```
 
-There are many useful methods available for working with newtypes using the [Newtype](https://pursuit.purescript.org/packages/purescript-newtype/) package.
-
 ## Type classes
 
 The `show` function takes a value and displays it as a string. `show` is defined by a type class in the Prelude module called Show, which is defined as follows:
@@ -490,11 +488,16 @@ instance Semiring Score where
   one = Score 1
 ```
 
-Note that we can use either of these options to derive an `Eq` instance for a `newtype`, since `Eq` has built-in compiler support. They are equivalent in this case.
+[Data.Newtype](https://pursuit.purescript.org/packages/purescript-newtype/5.0.0/docs/Data.Newtype) provides useful functions via deriving newtypes instances:
 
 ```purs
-derive instance eqScore :: Eq Score
-derive newtype instance eqScore :: Eq Score
+import Data.Newtype (Newtype, un)
+
+newtype Address = Address String
+derive instance Newtype Address _
+
+printAddress :: Address -> Eff _ Unit
+printAddress address = Console.log (un Address address)
 ```
 
 ### Deriving from `Generic`
