@@ -6,6 +6,9 @@ import Effect (Effect)
 import Test.Assert (assert)
 import Data.Either (Either(..))
 import Data.Validation.Semigroup (V, invalid, isValid)
+import Data.Generic.Rep (class Generic)
+import Data.Show.Generic (genericShow)
+import Effect.Console (logShow)
 
 newtype Score = Score Int
 
@@ -67,6 +70,18 @@ validateContactVAdo c = ado
   address <- pure c.address
   in { firstName, lastName, address }
 
+data MyADT
+  = Some
+  | Arbitrary Int
+  | Contents Number String
+
+derive instance Eq MyADT
+derive instance Ord MyADT
+derive instance Generic MyADT _
+
+instance Show MyADT where
+  show = genericShow
+
 main :: Effect Unit
 main = do
 
@@ -99,3 +114,6 @@ main = do
       [ "Field 'First Name' cannot be empty"
       , "Field 'Last Name' cannot be empty"
       ]
+
+  -- logs `[Some,(Arbitrary 1),(Contents 2.0 "Three")]`
+  logShow [ Some, Arbitrary 1, Contents 2.0 "Three" ]

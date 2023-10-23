@@ -10,8 +10,7 @@ Based on information picked from:
 - https://www.tobyhobson.com/posts/cats/
 - https://github.com/alpacaaa/zero-bs-haskell
 
-TO DO
-- Data.Generic.Rep deprecated (moved to Prelude etc.) see https://pursuit.purescript.org/packages/purescript-generics-rep/6.1.4 and write tests + modify the "Classes with built-in compiler support" section
+TO DO:
 - JSON decoding
 - Separate Layout page
 
@@ -502,8 +501,6 @@ printAddress address = Console.log (un Address address)
 ```
 
 ### Deriving from `Generic`
-
-<!-- TODO Data.Generic.Rep deprecated (moved to Prelude etc.) see https://pursuit.purescript.org/packages/purescript-generics-rep/6.1.4  and write tests -->
 
 For type classes without build-in support for deriving (such as `Show`) and for types other than newtypes where newtype deriving cannot be used, you can derive from `Generic` if the author of the type class library has implemented a generic version.
 
