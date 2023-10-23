@@ -10,10 +10,6 @@ Based on information picked from:
 - https://www.tobyhobson.com/posts/cats/
 - https://github.com/alpacaaa/zero-bs-haskell
 
-TO DO:
-- JSON decoding
-- Separate Layout page
-
 ## Common packages
 
 | **Elm**                                  | **Purescript**                           | **Notes**                                |
