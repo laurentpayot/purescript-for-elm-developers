@@ -1,3 +1,3 @@
 import { start } from '../output/Main/index.js'
 
-start()
+start({ counterInitialValue: 100})
