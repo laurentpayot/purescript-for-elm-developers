@@ -5,9 +5,9 @@ import Prelude
 import Effect (Effect)
 import Flame (Html, QuerySelector(..), Subscription)
 -- Side effects free updating; see docs for other examples
-import Flame.Application.NoEffects as FAN
-import Flame.Html.Element as HE
-import Flame.Html.Attribute as HA
+import Flame.Application.NoEffects as App
+import Flame.Html.Element (main, button, text)
+import Flame.Html.Attribute (onClick)
 
 -- | The model represents the state of the app
 type Model = Int
@@ -27,10 +27,10 @@ update model = case _ of
 
 -- | `view` is called whenever the model is updated
 view :: Model -> Html Message
-view model = HE.main "main"
-  [ HE.button [ HA.onClick Decrement ] "-"
-  , HE.text $ show model
-  , HE.button [ HA.onClick Increment ] "+"
+view model = main "main"
+  [ button [ onClick Decrement ] "-"
+  , text $ show model
+  , button [ onClick Increment ] "+"
   ]
 
 -- | Events that come from outside the `view`
@@ -38,8 +38,8 @@ subscribe :: Array (Subscription Message)
 subscribe = []
 
 -- | Mount the application on the given selector
-main :: Effect Unit
-main = FAN.mount_ (QuerySelector "body")
+start :: Effect Unit
+start = App.mount_ (QuerySelector "body")
   { init
   , view
   , update
