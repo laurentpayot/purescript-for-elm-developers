@@ -10,26 +10,32 @@ import Flame.Html.Element (main, button, text)
 import Flame.Html.Attribute (onClick)
 
 -- | The model represents the state of the app
-type Model = Int
+type Model =
+  { counter :: Int
+  }
 
 -- | Data type used to represent events
-data Message = Increment | Decrement
+data Message
+  = Increment
+  | Decrement
 
 -- | Initial state of the app
 init :: Model
-init = 0
+init =
+  { counter: 0
+  }
 
 -- | `update` is called to handle events
 update :: Model -> Message -> Model
 update model = case _ of
-  Increment -> model + 1
-  Decrement -> model - 1
+  Increment -> model { counter = model.counter + 1 }
+  Decrement -> model { counter = model.counter - 1 }
 
 -- | `view` is called whenever the model is updated
 view :: Model -> Html Message
 view model = main "main"
   [ button [ onClick Decrement ] "-"
-  , text $ show model
+  , text $ show model.counter
   , button [ onClick Increment ] "+"
   ]
 
