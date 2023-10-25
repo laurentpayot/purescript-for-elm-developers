@@ -543,7 +543,7 @@ map (\n -> n + 1) (Just 5)
 
 To *lift* a function means to turn it into a function that works with functor-wrapped arguments. Applicative functors are functors that allow lifting of functions.
 
-`<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Apply) type class (that extends `Functor`). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
+`<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Apply) type class (that extends [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Functor)). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
 
 The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value wrapped in the applicative functor. `pure` can be seen as the function which lifts functions of zero arguments ("constants").
 
@@ -662,26 +662,13 @@ validateContactVAdo c = ado
 
 ## Monads
 
-`>>=` is the infix alias of the *bind* operator defined in the [Monad](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Monad) type class. `>>=` is equivalent to [`|> andThen`](https://package.elm-lang.org/packages/elm/core/latest/Maybe#andThen) in Elm.
+`>>=` is the infix alias of the `bind` operator defined in the [Bind](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Bind) type class (that extends [`Apply`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Apply)). `>>=` is equivalent to [`|> andThen`](https://package.elm-lang.org/packages/elm/core/latest/Maybe#andThen) in Elm.
+
+The [Monad](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class combines the operations of the `Bind` and Applicative type classes. Therefore, `Monad` instances represent type constructors which support both sequential composition and function lifting.
+
 ```purs
 class Monad m where
   (>>=) :: m a -> (a -> m b) -> m b
-```
-
- The signature is the same as that of Elm’s `Maybe.andThen`, except the arguments are flipped. They are flipped in PureScript because their version is an infix operator:
-
-```elm
--- Elm
-example : Maybe Int
-example =
-  Just "23" |> Maybe.andThen String.toInt
-```
-
-```purs
--- PureScript
-example :: Maybe Int
-example =
-  Just "23" >>= readMaybe
 ```
 
 Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something “fails” the operation aborts.
