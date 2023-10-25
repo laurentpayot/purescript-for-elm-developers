@@ -8,7 +8,6 @@ import Flame (Html, QuerySelector(..), Subscription)
 import Flame.Application.NoEffects as App
 import Flame.Html.Element (main, button, text)
 import Flame.Html.Attribute (onClick)
-import Debug (spy)
 
 -- | The model represents the state of the app
 type Model =
@@ -51,7 +50,7 @@ subscribe = []
 -- | Mount the application on the given selector
 start :: Flags -> Effect Unit
 start flags = App.mount_ (QuerySelector "body")
-  { init: { counter: spy "counterInitialValue" flags.counterInitialValue }
+  { init: init { counter = flags.counterInitialValue }
   , view
   , update
   , subscribe
