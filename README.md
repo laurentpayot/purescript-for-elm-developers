@@ -704,7 +704,7 @@ foo = do
   print z -- not `value <- computation` but just `computation`
 ```
 
-The `main` function of PureScript programs uses the `Effect` monad:
+The `main` function of PureScript programs uses the `Effect` monad (`log` returns `Effect Unit`):
 
 ```purs
 main :: Effect Unit
