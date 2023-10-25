@@ -523,29 +523,38 @@ meaningOfLife :: Warn (Text "`meaningOfLife` result is hardcoded, for now.) => I
 meaningOfLife = 42
 ```
 
-## Applicatives
+## Functors
 
-To *lift* a function means to turn it into a function that works with functor-wrapped arguments. Applicative functors are functors that allow lifting of functions.
-
-`<*>` is the infix alias of the *apply* operator defined in the [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Applicative) type class, and is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
+`<$>` is the infix alias of the `map` operator defined in the [Functor](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Functor) type class.
 
 ```purs
-class Applicative f where
-  pure :: a -> f a
-  (<*>) :: f (a -> b) -> f a -> f b
+class Functor f where
+  map :: forall a b. (a -> b) -> f a -> f b
 ```
 
-Applicative lets us perform N operations independently, then it aggregates the results for us.
-You are in an applicative context when using [`Decoder`](https://package.elm-lang.org/packages/elm/json/latest/Json-Decode#map2) in Elm.
-
-### Map alias `<$>`
-
-Often used with `<*>`, the `<$>` operator is alias for `map` but in infix position, meaning that the two are equivalent:
+The two following lines are equivalent:
 
 ```purs
 map (\n -> n + 1) (Just 5)
 (\n -> n + 1) <$> (Just 5)
 ```
+
+## Applicatives
+
+To *lift* a function means to turn it into a function that works with functor-wrapped arguments. Applicative functors are functors that allow lifting of functions.
+
+`<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Apply) type class (that extends `Functor`). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
+
+The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value wrapped in the applicative functor. `pure` can be seen as the function which lifts functions of zero arguments ("constants").
+
+```purs
+class Applicative f where
+  pure :: a -> f a
+  (<*>) :: f (a -> b) -> f a -> f b -- "inherited" from the `Apply` type class
+```
+
+Applicative lets us perform N operations independently, then it aggregates the results for us.
+You are in an applicative context when using [`Decoder`](https://package.elm-lang.org/packages/elm/json/latest/Json-Decode#map2) in Elm.
 
 ### Applicative validation
 
@@ -605,6 +614,7 @@ validateContactEither :: Contact -> Either String Contact
 validateContactEither c = { firstName: _, lastName: _, address: _ }
   <$> nonEmptyEither "First Name" c.firstName
   <*> nonEmptyEither "Last Name" c.lastName
+  -- wrapping the c.address "constant" in `Either` (we could also have used `Right c.address`)
   <*> pure c.address
 
 assert $ validateContactEither goodContact == Right goodContact
@@ -652,7 +662,7 @@ validateContactVAdo c = ado
 
 ## Monads
 
-`>>=` is the infix alias of the *bind* operator defined in the [Monad](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Monad) type class, and is is equivalent to [`|> andThen`](https://package.elm-lang.org/packages/elm/core/latest/Maybe#andThen) in Elm.
+`>>=` is the infix alias of the *bind* operator defined in the [Monad](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Control.Monad) type class. `>>=` is equivalent to [`|> andThen`](https://package.elm-lang.org/packages/elm/core/latest/Maybe#andThen) in Elm.
 ```purs
 class Monad m where
   (>>=) :: m a -> (a -> m b) -> m b
