@@ -677,7 +677,7 @@ example =
 Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something “fails” the operation aborts.
 You are in a monadic context when using [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task#andThen) in Elm.
 
-### Monad do notation
+### Monad do-notation
 
 The `do` keyword is "syntactic sugar" for chained `>>=`. It removes the need for indentations.
 
@@ -699,9 +699,30 @@ is the same as
 foo :: Box Unit
 foo = do
   x <- getMyInt
-  let y = x + 4 -- no need to have a corresponding `in` statement
+  let y = x + 4 -- `in` keyword not needed
   z <- toString y
-  print z -- last line must not end with `value <- computation` but just `computation`
+  print z -- not `value <- computation` but just `computation`
+```
+
+The `main` function of PureScript programs uses the `Effect` monad:
+
+```purs
+main :: Effect Unit
+main = (log "This is outputted first") >>= (\_ ->
+          (log "This is outputted second") >>= (\_ ->
+            log "This is outputted third"
+          )
+        )
+```
+
+and is more readable using the do-notation:
+
+```purs
+main :: Effect Unit
+main = do
+  log "This is outputted first"
+  log "This is outputted second"
+  log "This is outputted third"
 ```
 
 ## Foreign Function Interface (FFI)
