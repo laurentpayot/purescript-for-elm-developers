@@ -38,7 +38,7 @@ Based on information picked from:
 | `<<`                                     | `<<<`                                    |           |
 | \|>                                      | `#`                                      |           |
 | <\|                                      | `$`                                      |           |
-| ++                                       | <>                                       | Concatenation for `String` and `List` ([`Semigroup`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Semigroup#t:Semigroup))|
+| ++                                       | <>                                       | [`Semigroup`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Semigroup#t:Semigroup) concatenation (`String`, `Array`, `List`, `Tuple` ...)|
 
 ## Type signatures
 
