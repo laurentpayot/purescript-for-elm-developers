@@ -2,56 +2,78 @@ module Main where
 
 import Prelude
 
+import Data.Maybe (Maybe(..))
+import Data.Tuple (Tuple)
 import Effect (Effect)
-import Flame (Html, QuerySelector(..), Subscription)
--- Side effects free updating; see docs for other examples
-import Flame.Application.NoEffects as App
-import Flame.Html.Element (main, button, text)
-import Flame.Html.Attribute (onClick)
+import Effect.Aff (Aff)
+import Effect.Class (liftEffect)
+import Effect.Random (randomInt)
+import Effect.Timer as Timer
 
--- | The model represents the state of the app
+import Flame (AppId(..), Html, QuerySelector(..), Subscription, (:>)) -- `:>` is an infix tuple constructor
+import Flame as App
+import Flame.Html.Attribute (onClick, id)
+import Flame.Html.Element (main, h1, button, text)
+import Flame.Subscription as Subscription
+import Flame.Subscription.Document as Document
+
 type Model =
-  { counter :: Int
+  { roll ∷ Maybe Int
+  , from ∷ String
   }
 
 type Flags =
-  { counterInitialValue :: Int
+  { interval :: Int
   }
 
--- | Data type used to represent events
-data Message
-  = Increment
-  | Decrement
+-- recreating Elm type alias `Cmd`
+type Cmd msg = Aff (Maybe msg)
 
--- | Initial state of the app
-init :: Model
+init ∷ Tuple Model (Array (Cmd Msg))
 init =
-  { counter: 0
-  }
+  { roll: Nothing
+  , from: ""
+  } :> []
 
--- | `update` is called to handle events
-update :: Model -> Message -> Model
+data Msg
+  = IntervalRoll
+  | ClickRoll
+  | Update String Int
+
+update ∷ Model -> Msg -> Tuple Model (Array (Cmd Msg))
 update model = case _ of
-  Increment -> model { counter = model.counter + 1 }
-  Decrement -> model { counter = model.counter - 1 }
+  IntervalRoll -> model :> next "interval"
+  ClickRoll -> model :> next "click"
+  Update from int ->
+    { roll: Just int
+    , from
+    } :> []
+  where
+  next :: String -> Array (Cmd Msg)
+  next from = [ Just <<< Update from <$> liftEffect (randomInt 1 6) ]
 
--- | `view` is called whenever the model is updated
-view :: Model -> Html Message
-view model = main "main"
-  [ button [ onClick Decrement ] "-"
-  , text $ show model.counter
-  , button [ onClick Increment ] "+"
+subscribe ∷ Array (Subscription Msg)
+subscribe =
+  [ Document.onClick ClickRoll -- `document` click event
   ]
 
--- | Events that come from outside the `view`
-subscribe :: Array (Subscription Message)
-subscribe = []
+view ∷ Model -> Html Msg
+view { roll, from } =
+  main [ id "main" ]
+    [ h1 [ id "foo" ] [ text "Dice Rolling" ]
+    , text $ case roll of
+        Nothing -> "No rolls!"
+        Just r -> "Roll from " <> from <> ": " <> show r
+    ]
 
--- | Mount the application on the given selector
-start :: Flags -> Effect Unit
-start flags = App.mount_ (QuerySelector "body")
-  { init: init { counter = flags.counterInitialValue }
-  , view
-  , update
-  , subscribe
-  }
+start ∷ Flags -> Effect Unit
+start flags = do
+  let id = AppId "dice-rolling"
+  App.mount (QuerySelector "body") id
+    { init
+    , subscribe
+    , update
+    , view
+    }
+  -- roll dice every interval
+  void $ Timer.setInterval flags.interval (Subscription.send id IntervalRoll)
