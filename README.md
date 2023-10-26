@@ -545,7 +545,7 @@ To *lift* a function means to turn it into a function that works with functor-wr
 
 `<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Apply) type class (that extends [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Functor)). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
 
-The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value lifted into the applicative functor.
+The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value lifted into the applicative functor. With `Maybe`, `pure` is the same as `Just`, and with `Either`, `pure` is the same as `Right`, but it is recommended to use `pure` in case of an eventual applicative functor change.
 
 ```purs
 class Applicative f where
@@ -671,7 +671,7 @@ class Monad m where
   (>>=) :: m a -> (a -> m b) -> m b
 ```
 
-Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something “fails” the operation aborts.
+Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something "fails" the operation aborts.
 You are in a monadic context when using [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task#andThen) in Elm.
 
 ### Monad do-notation
