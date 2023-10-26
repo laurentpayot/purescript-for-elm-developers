@@ -545,7 +545,7 @@ To *lift* a function means to turn it into a function that works with functor-wr
 
 `<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Apply) type class (that extends [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Functor)). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
 
-The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value wrapped in the applicative functor. `pure` can be seen as the function which lifts functions of zero arguments ("constants").
+The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value lifted into the applicative functor.
 
 ```purs
 class Applicative f where
@@ -614,7 +614,7 @@ validateContactEither :: Contact -> Either String Contact
 validateContactEither c = { firstName: _, lastName: _, address: _ }
   <$> nonEmptyEither "First Name" c.firstName
   <*> nonEmptyEither "Last Name" c.lastName
-  -- wrapping the c.address "constant" in `Either` (we could also have used `Right c.address`)
+  -- lifting the `c.address` value into `Either` (we could also have used `Right c.address`)
   <*> pure c.address
 
 assert $ validateContactEither goodContact == Right goodContact
@@ -851,7 +851,7 @@ decodeJSON :: forall a. Decode a => String -> F a
 type F = Except (NonEmptyList ForeignError)
 ```
 
-`Except` is an monad for handling exceptions in pure code, much like `Either`. We can convert a value in the `F` monad into a value in the `Either` monad by using the `runExcept` function.
+`Except` is an monad for handling exceptions, much like `Either`. We can convert a value in the `F` monad into a value in the `Either` monad by using the `runExcept` function.
 
 ```purs
 import Control.Monad.Except
