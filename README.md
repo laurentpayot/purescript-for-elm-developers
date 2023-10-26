@@ -1,4 +1,4 @@
-# From Elm to PureScript 🤯
+# From Elm to PureScript :exploding_head:
 
 Based on information picked from:
 - https://github.com/alpacaaa/elm-to-purescript-cheatsheet
