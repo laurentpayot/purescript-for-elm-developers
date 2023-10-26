@@ -1,4 +1,4 @@
-# PureScript from Elm
+# From Elm to PureScript 🤯
 
 Based on information picked from:
 - https://github.com/alpacaaa/elm-to-purescript-cheatsheet
@@ -1054,20 +1054,16 @@ runExcept (map unNullOrUndefined <$> decodeJSON "[1, 2, null]" :: F (Array (Null
 -- Right [(Just 1),(Just 2),Nothing]
 ```
 
-## Front-end frameworks
-
-[Halogen](https://purescript-halogen.github.io/purescript-halogen/) is the most used front-end framework for PureScript but we will use [Flame](https://flame.asafe.dev/) because it is inspired by the Elm architecture with focus on simplicity and performance.
-
-- Message based state updating – see [Handling events](https://flame.asafe.dev/events)
-- Subscriptions – see [Handling external events](https://flame.asafe.dev/events#subscriptions)
-- Server side rendering – see [Rendering the app](https://flame.asafe.dev/rendering)
-- Performance comparable to native JavaScript frameworks – see [benchmarks](https://flame.asafe.dev/benchmarks)
-- Parse HTML into Flame markup with [breeze](https://github.com/easafe/haskell-breeze)
-
 ## Vite setup
 
 When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/items/nwolverson.ide-purescript) the project is built every time you save a file. There is no need for a special Vite plugin. Just import `output/Main/index.js` in your Vite `main.js` file.
 
-## Purescript counter web app
+## The Flame front-end framework
 
-- If GitHub errors like "Empty reply from server" during `pnpm spago install flame`, remove the erroneous packages directories from the /.spago folder and try `pnpm spago build` to reinstall them.
+[Halogen](https://purescript-halogen.github.io/purescript-halogen/) is the most used front-end framework for PureScript but we will use the [**Flame**](https://flame.asafe.dev/) framework because:
+
+- The [Flame architecture](https://flame.asafe.dev/events) is inspired by the [Elm architecture](https://guide.elm-lang.org/architecture/).
+- Performance is [comparable to Elm](https://flame.asafe.dev/benchmarks).
+- Server Side Rendering is [supported](https://flame.asafe.dev/rendering).
+
+Note: If GitHub errors like "Empty reply from server" during `pnpm spago install flame`, remove the erroneous packages directories from the /.spago folder and try `pnpm spago build` to reinstall them.
