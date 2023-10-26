@@ -23,20 +23,22 @@ Based on information picked from:
 | [Dict](http://package.elm-lang.org/packages/elm-lang/core/latest/Dict) | [Data.Map](https://pursuit.purescript.org/packages/purescript-maps) |                                          |
 | [Set](http://package.elm-lang.org/packages/elm-lang/core/latest/Set) | [Data.Set](https://pursuit.purescript.org/packages/purescript-sets) |                                          |
 | () | [Data.Unit](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Unit) | `()` is the empty [`Row` type](https://github.com/purescript/documentation/blob/master/language/Types.md#rows) in PureScript |
+| [Never](https://package.elm-lang.org/packages/elm/core/latest/Basics#Never) | [Data.Void](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Void) | |
 | [Debug](http://package.elm-lang.org/packages/elm-lang/core/latest/Debug) | [Debug.Trace](https://pursuit.purescript.org/packages/purescript-debug) | `Debug.spy` is the closest thing to `Debug.log` |
 
 ## Common Functions
 
 | **Elm**                                  | **Purescript**                           | **Notes** |
 | ---------------------------------------- | ---------------------------------------- | --------- |
-| [identity](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#identity) | [id](https://pursuit.purescript.org/packages/purescript-prelude) |
-| [always](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#always) | [const](https://pursuit.purescript.org/packages/purescript-prelude) |
+| [identity](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#identity) | [identity](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Function#v:identity) |
+| [always](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#always) | [const](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Function#v:const) |
+| [never](https://package.elm-lang.org/packages/elm/core/latest/Basics#never) | [absurd](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Void#v:absurd) |
 | [toString](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#toString) | [show](https://pursuit.purescript.org/packages/purescript-prelude) |
 | `>>`                                     | `>>>`                                    |           |
 | `<<`                                     | `<<<`                                    |           |
 | \|>                                      | `#`                                      |           |
 | <\|                                      | `$`                                      |           |
-| ++                                       | <>                                       | `String` concatenation |
+| ++                                       | <>                                       | Concatenation for `String` and `List` ([`Semigroup`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Semigroup#t:Semigroup))|
 
 ## Type signatures
 
