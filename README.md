@@ -22,23 +22,23 @@ Based on information picked from:
 | [Tuple](http://package.elm-lang.org/packages/elm-lang/core/latest/Tuple) | [Data.Tuple](https://pursuit.purescript.org/packages/purescript-tuples) |                                    |
 | [Dict](http://package.elm-lang.org/packages/elm-lang/core/latest/Dict) | [Data.Map](https://pursuit.purescript.org/packages/purescript-maps) |                                          |
 | [Set](http://package.elm-lang.org/packages/elm-lang/core/latest/Set) | [Data.Set](https://pursuit.purescript.org/packages/purescript-sets) |                                          |
-| () | [Data.Unit](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Unit) | `()` is the empty [`Row` type](https://github.com/purescript/documentation/blob/master/language/Types.md#rows) in PureScript |
-| [Never](https://package.elm-lang.org/packages/elm/core/latest/Basics#Never) | [Data.Void](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Void) | |
+| () | [Data.Unit](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Unit) | `()` is the empty [`Row` type](https://github.com/purescript/documentation/blob/master/language/Types.md#rows) in PureScript |
+| [Never](https://package.elm-lang.org/packages/elm/core/latest/Basics#Never) | [Data.Void](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Void) | |
 | [Debug](http://package.elm-lang.org/packages/elm-lang/core/latest/Debug) | [Debug.Trace](https://pursuit.purescript.org/packages/purescript-debug) | `Debug.spy` is the closest thing to `Debug.log` |
 
 ## Common Functions
 
 | **Elm**                                  | **Purescript**                           | **Notes** |
 | ---------------------------------------- | ---------------------------------------- | --------- |
-| [identity](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#identity) | [identity](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Function#v:identity) |
-| [always](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#always) | [const](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Function#v:const) |
-| [never](https://package.elm-lang.org/packages/elm/core/latest/Basics#never) | [absurd](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Void#v:absurd) |
+| [identity](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#identity) | [identity](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Function#v:identity) |
+| [always](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#always) | [const](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Function#v:const) |
+| [never](https://package.elm-lang.org/packages/elm/core/latest/Basics#never) | [absurd](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Void#v:absurd) |
 | [toString](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#toString) | [show](https://pursuit.purescript.org/packages/purescript-prelude) |
 | `>>`                                     | `>>>`                                    |           |
 | `<<`                                     | `<<<`                                    |           |
 | \|>                                      | `#`                                      |           |
 | <\|                                      | `$`                                      |           |
-| ++                                       | <>                                       | Concatenation for `String` and `List` ([`Semigroup`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Semigroup#t:Semigroup))|
+| ++                                       | <>                                       | Concatenation for `String` and `List` ([`Semigroup`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Semigroup#t:Semigroup))|
 
 ## Type signatures
 
@@ -124,7 +124,7 @@ case xs of
 
 ## Non empty arrays/lists
 
-The they are `NonEmpty` modules for [Array](https://pursuit.purescript.org/packages/purescript-arrays/4.4.0/docs/Data.Array.NonEmpty) and [List](https://pursuit.purescript.org/packages/purescript-lists/4.0.1/docs/Data.List.NonEmpty). They are quite useful to flatten cases as described in the famous ["Parse, don’t validate"](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/) blog post.
+The they are `NonEmpty` modules for [Array](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array.NonEmpty) and [List](https://pursuit.purescript.org/packages/purescript-lists/docs/Data.List.NonEmpty). They are quite useful to flatten cases as described in the famous ["Parse, don’t validate"](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/) blog post.
 
 ```purs
 data NonEmpty a = a :| [a]
@@ -531,7 +531,7 @@ instance Show Boolean where
 
 Instead of defining a different `map` for each type (Maybe, Result etc.) like in Elm, PureScript uses type classes.
 
-For instance, `map` is defined once for all with the [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/3.0.0/docs/Data.Functor) type class. A `Functor` is a type constructor which supports a mapping operation `map`.
+For instance, `map` is defined once for all with the [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Functor) type class. A `Functor` is a type constructor which supports a mapping operation `map`.
 
 ```purs
 class Functor f where
@@ -627,7 +627,7 @@ instance Semiring Score where
   one = Score 1
 ```
 
-[Data.Newtype](https://pursuit.purescript.org/packages/purescript-newtype/5.0.0/docs/Data.Newtype) provides useful functions via deriving newtypes instances:
+[Data.Newtype](https://pursuit.purescript.org/packages/purescript-newtype/docs/Data.Newtype) provides useful functions via deriving newtypes instances:
 
 ```purs
 import Data.Newtype (Newtype, un)
@@ -668,7 +668,7 @@ meaningOfLife = 42
 
 ## Functors
 
-`<$>` is the infix alias of the `map` operator defined in the [Functor](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Functor) type class.
+`<$>` is the infix alias of the `map` operator defined in the [Functor](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Functor) type class.
 
 ```purs
 class Functor f where
@@ -686,9 +686,9 @@ map (\n -> n + 1) (Just 5)
 
 To *lift* a function means to turn it into a function that works with functor-wrapped arguments. Applicative functors are functors that allow lifting of functions.
 
-`<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Apply) type class (that extends [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Data.Functor)). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
+`<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/docs/Control.Apply) type class (that extends [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Functor)). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
 
-The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value lifted into the applicative functor. With `Maybe`, `pure` is the same as `Just`, and with `Either`, `pure` is the same as `Right`, but it is recommended to use `pure` in case of an eventual applicative functor change.
+The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value lifted into the applicative functor. With `Maybe`, `pure` is the same as `Just`, and with `Either`, `pure` is the same as `Right`, but it is recommended to use `pure` in case of an eventual applicative functor change.
 
 ```purs
 class Applicative f where
@@ -764,7 +764,7 @@ assert $ validateContactEither goodContact == Right goodContact
 assert $ validateContactEither badContact ==  Left "Field 'First Name' cannot be empty"
 ```
 
-To get an array of all the errors we can use the `V` functor of [`Data.Validation.Semigroup`](https://pursuit.purescript.org/packages/purescript-validation/6.0.0/docs/Data.Validation.Semigroup) that it allows us to collect multiple errors using an arbitrary semigroup (such as `Array String` in the example below).
+To get an array of all the errors we can use the `V` functor of [`Data.Validation.Semigroup`](https://pursuit.purescript.org/packages/purescript-validation/docs/Data.Validation.Semigroup) that it allows us to collect multiple errors using an arbitrary semigroup (such as `Array String` in the example below).
 
 ```purs
 import Data.Validation.Semigroup (V, invalid, isValid)
@@ -805,9 +805,9 @@ validateContactVAdo c = ado
 
 ## Monads
 
-`>>=` is the infix alias of the `bind` operator defined in the [Bind](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Bind) type class (that extends [`Apply`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Apply)). `>>=` is equivalent to [`|> andThen`](https://package.elm-lang.org/packages/elm/core/latest/Maybe#andThen) in Elm.
+`>>=` is the infix alias of the `bind` operator defined in the [Bind](https://pursuit.purescript.org/packages/purescript-prelude/docs/Control.Bind) type class (that extends [`Apply`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Control.Apply)). `>>=` is equivalent to [`|> andThen`](https://package.elm-lang.org/packages/elm/core/latest/Maybe#andThen) in Elm.
 
-The [Monad](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Control.Applicative) type class combines the operations of the `Bind` and Applicative type classes. Therefore, `Monad` instances represent type constructors which support both sequential composition and function lifting.
+The [Monad](https://pursuit.purescript.org/packages/purescript-prelude/docs/Control.Applicative) type class combines the operations of the `Bind` and Applicative type classes. Therefore, `Monad` instances represent type constructors which support both sequential composition and function lifting.
 
 ```purs
 class Monad m where
@@ -866,7 +866,7 @@ main = do
 ```
 
 The above example works because `log` returns `Effect Unit`.
-We can use the [`void`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Prelude#v:void) function to ignore the type wrapped by a Functor and replace it with `Unit`:
+We can use the [`void`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Prelude#v:void) function to ignore the type wrapped by a Functor and replace it with `Unit`:
 
 ```purs
 void :: forall f a. Functor f => f a -> f Unit
