@@ -701,7 +701,7 @@ foo = do
   print z -- not `value <- computation` but just `computation`
 ```
 
-The `main` function of PureScript programs uses the `Effect` monad (`log` returns `Effect Unit`):
+The `main` function of PureScript programs uses the `Effect` monad:
 
 ```purs
 main :: Effect Unit
@@ -720,6 +720,25 @@ main = do
   log "This is outputted first"
   log "This is outputted second"
   log "This is outputted third"
+```
+
+The above example works because `log` returns `Effect Unit`.
+We can use the [`void`](https://pursuit.purescript.org/packages/purescript-prelude/6.0.1/docs/Prelude#v:void) function to ignore the type wrapped by a Functor and replace it with `Unit`:
+
+```purs
+void :: forall f a. Functor f => f a -> f Unit
+```
+
+That is useful when using the do-notation:
+
+```purs
+foo :: Int -> Effect Int
+
+main :: Effect Unit
+main = do
+  log "Starting..."
+  void $ foo 42
+  log "Done!"
 ```
 
 ## Foreign Function Interface (FFI)
