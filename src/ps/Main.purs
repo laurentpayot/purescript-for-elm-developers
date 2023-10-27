@@ -12,7 +12,7 @@ module Main
 import Prelude
 
 import Data.Maybe (Maybe(..))
-import Data.Tuple (Tuple, fst)
+import Data.Tuple (Tuple, fst, snd)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
@@ -25,7 +25,7 @@ import Flame.Subscription (onCustomEvent)
 import Web.Event.Event (EventType(..))
 
 type Model =
-  { count :: Int
+  { count :: IntCustomEvent
   , time :: String
   }
 
@@ -76,7 +76,7 @@ view { count, time } =
 start ∷ Flags -> Effect Unit
 start { initialCount } = do
   App.mount (QuerySelector "body") (AppId "flame-example")
-    { init: (fst init) { count = initialCount } :> []
+    { init: (fst init) { count = initialCount } :> (snd init)
     , subscribe
     , update
     , view
