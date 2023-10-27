@@ -38,7 +38,9 @@ type Cmd msg = Aff (Maybe msg)
 
 init :: Tuple Model (Array (Cmd Msg))
 init =
-  { count: 0, time: "Waiting for tick…" } :> []
+  { count: 0
+  , time: "Waiting for tick…"
+  } :> []
 
 data Msg
   = Increment
@@ -57,7 +59,7 @@ update model = case _ of
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
-  [ --onCustomEvent (EventType "tick") (show >>> GotTick)
+  [ onCustomEvent (EventType "tick") GotTick
   ]
 
 view ∷ Model -> Html Msg
@@ -67,9 +69,7 @@ view { count, time } =
     , button [ onClick Decrement ] "-"
     , text (show count)
     , button [ onClick Increment ] "+"
-    , p_
-        [ button [ onClick Randomize ] "Random"
-        ]
+    , p_ [ button [ onClick Randomize ] "Random" ]
     , p_ time
     ]
 
