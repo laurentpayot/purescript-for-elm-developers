@@ -57,7 +57,7 @@ update model = case _ of
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
-  [ -- onCustomEvent (EventType "tick") GotTick
+  [ --onCustomEvent (EventType "tick") (show >>> GotTick)
   ]
 
 view ∷ Model -> Html Msg
