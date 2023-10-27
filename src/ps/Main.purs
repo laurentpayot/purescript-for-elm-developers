@@ -1,29 +1,36 @@
-module Main where
+module Main
+  ( Cmd
+  , Model
+  , Msg(..)
+  , init
+  , start
+  , subscribe
+  , update
+  , view
+  ) where
 
 import Prelude
 
 import Data.Maybe (Maybe(..))
-import Data.Tuple (Tuple)
+import Data.Tuple (Tuple, fst)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Random (randomInt)
-import Effect.Timer as Timer
-
-import Flame (AppId(..), Html, QuerySelector(..), Subscription, (:>)) -- `:>` is an infix tuple constructor
+import Flame (AppId(..), Html, QuerySelector(..), Subscription, (:>))
 import Flame as App
-import Flame.Html.Attribute (id)
-import Flame.Html.Element (main, h1_, text)
-import Flame.Subscription as Subscription
-import Flame.Subscription.Document as Document
+import Flame.Html.Attribute (id, onClick)
+import Flame.Html.Element (main, h1_, text, button, p_)
+import Flame.Subscription (onCustomEvent)
+import Web.Event.Event (EventType(..))
 
 type Model =
-  { roll :: Maybe Int
-  , from :: String
+  { count :: Int
+  , time :: String
   }
 
 type Flags =
-  { interval :: Int
+  { initialCount :: Int
   }
 
 -- recreating Elm type alias `Cmd`
@@ -31,49 +38,46 @@ type Cmd msg = Aff (Maybe msg)
 
 init :: Tuple Model (Array (Cmd Msg))
 init =
-  { roll: Nothing
-  , from: ""
-  } :> []
+  { count: 0, time: "Waiting for tick…" } :> []
 
 data Msg
-  = IntervalRoll
-  | ClickRoll
-  | Update String Int
+  = Increment
+  | Decrement
+  | Randomize
+  | GotRandom Int
+  | GotTick String
 
 update ∷ Model -> Msg -> Tuple Model (Array (Cmd Msg))
 update model = case _ of
-  IntervalRoll -> model :> next "interval"
-  ClickRoll -> model :> next "click"
-  Update from int ->
-    { roll: Just int
-    , from
-    } :> []
-  where
-  next :: String -> Array (Cmd Msg)
-  next from = [ Just <<< Update from <$> liftEffect (randomInt 1 6) ]
+  Increment -> model { count = model.count + 1 } :> []
+  Decrement -> model { count = model.count - 1 } :> []
+  Randomize -> model :> [ Just <<< GotRandom <$> liftEffect (randomInt 1 100) ]
+  GotRandom int -> model { count = int } :> []
+  GotTick timeStr -> model { time = timeStr } :> []
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
-  [ Document.onClick ClickRoll -- `document` click event
+  [ -- onCustomEvent (EventType "tick") GotTick
   ]
 
 view ∷ Model -> Html Msg
-view { roll, from } =
+view { count, time } =
   main [ id "main" ]
-    [ h1_ "Dice Rolling"
-    , text $ case roll of
-        Nothing -> "No rolls!"
-        Just r -> "Roll from " <> from <> ": " <> show r
+    [ h1_ "Flame example"
+    , button [ onClick Decrement ] "-"
+    , text (show count)
+    , button [ onClick Increment ] "+"
+    , p_
+        [ button [ onClick Randomize ] "Random"
+        ]
+    , p_ time
     ]
 
 start ∷ Flags -> Effect Unit
-start flags = do
-  let appId = AppId "dice-rolling"
-  App.mount (QuerySelector "body") appId
-    { init
+start { initialCount } = do
+  App.mount (QuerySelector "body") (AppId "flame-example")
+    { init: (fst init) { count = initialCount } :> []
     , subscribe
     , update
     , view
     }
-  -- roll dice every interval
-  void $ Timer.setInterval flags.interval (Subscription.send appId IntervalRoll)
