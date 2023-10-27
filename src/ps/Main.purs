@@ -25,7 +25,7 @@ import Flame.Subscription (onCustomEvent)
 import Web.Event.Event (EventType(..))
 
 type Model =
-  { count :: IntCustomEvent
+  { count :: Int
   , time :: String
   }
 
