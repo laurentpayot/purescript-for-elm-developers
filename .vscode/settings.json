@@ -1,11 +1,7 @@
 {
-    "purescript.addSpagoSources": true,
     "purescript.addNpmPath": true,
-    "purescript.buildCommand": "spago build --purs-args --json-errors",
-    "purescript.formatter": "purs-tidy",
-    "[purescript]": {
-        "editor.formatOnSave": true
-    },
+    "vite.port": 5000,
+    "browse-lite.startUrl": "localhost:5000",
     "cSpell.enableFiletypes": [
         "purescript",
         "dhall"

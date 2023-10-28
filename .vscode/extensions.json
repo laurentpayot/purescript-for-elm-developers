@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "nwolverson.ide-purescript"
+        "nwolverson.ide-purescript",
+        "antfu.vite"
     ]
 }
