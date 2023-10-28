@@ -11,7 +11,7 @@ module Main
 
 import Prelude
 
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Tuple (Tuple, fst, snd)
 import Effect (Effect)
 import Effect.Aff (Aff)
@@ -59,7 +59,7 @@ update model = case _ of
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
-  [ onCustomEvent (EventType "tick") GotTick
+  [ onCustomEvent (EventType "tick") (fromMaybe "???" >>> GotTick)
   ]
 
 view ∷ Model -> Html Msg
