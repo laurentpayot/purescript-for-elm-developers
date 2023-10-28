@@ -8,4 +8,4 @@ setInterval(() => {
     )}))
 }, 1000)
 
-document.addEventListener("tick", ({detail}) => console.log("payload:", JSON.parse(detail)), false)
+document.addEventListener("tick", ({detail}) => console.log(JSON.parse(detail)), false)
