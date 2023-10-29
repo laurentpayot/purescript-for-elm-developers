@@ -12,15 +12,20 @@ to generate this file without the comments in this block.
 -}
 { name = "purescript-counter-web-app"
 , dependencies =
-  [ "assert"
+  [ "aff"
+  , "assert"
   , "console"
   , "debug"
   , "effect"
   , "either"
   , "flame"
-  , "js-timers"
+  , "foreign"
+  , "maybe"
   , "prelude"
+  , "random"
+  , "tuples"
   , "validation"
+  , "web-events"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/ps/**/*.purs", "tests/ps/**/*.purs" ]
