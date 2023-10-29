@@ -8,4 +8,4 @@ setInterval(() => {
     )}))
 }, 1000)
 
-document.addEventListener("time", ({detail}) => console.log(JSON.parse(detail)), false)
+// document.addEventListener("time", ({detail}) => console.log(JSON.parse(detail)), false)

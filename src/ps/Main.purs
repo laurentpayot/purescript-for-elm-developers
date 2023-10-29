@@ -2,13 +2,13 @@ module Main where
 
 import Prelude
 
-import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple, fst, snd)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Random (randomInt)
-import Flame (AppId(..), Html, QuerySelector(..), Subscription, (:>))
+import Flame (Html, QuerySelector(..), Subscription, (:>))
 import Flame as App
 import Flame.Html.Attribute (id, onClick)
 import Flame.Html.Element (main, h1_, text, button, p_)
@@ -56,7 +56,7 @@ update model = case _ of
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
-  [ onCustomEvent (EventType "time") (fromMaybe { time: "???" } >>> GotTimeRecord)
+  [ onCustomEvent (EventType "time") (\timeRecord -> GotTimeRecord timeRecord)
   ]
 
 view ∷ Model -> Html Msg
@@ -72,7 +72,7 @@ view { count, time } =
 
 start ∷ Flags -> Effect Unit
 start { initialCount } = do
-  App.mount (QuerySelector "body") (AppId "flame-example")
+  App.mount_ (QuerySelector "body")
     { init: (fst init) { count = initialCount } :> (snd init)
     , subscribe
     , update
