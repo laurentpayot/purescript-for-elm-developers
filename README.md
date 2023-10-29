@@ -1013,6 +1013,8 @@ decodeJSON :: forall a. Decode a => String -> F a
 type F = Except (NonEmptyList ForeignError)
 ```
 
+Note: [The usage of the `F` alias is now discouraged](https://github.com/purescript/documentation/blob/master/migration-guides/0.15-Migration-Guide.md#discouraging-usage-of-f-and-ft).
+
 `Except` is an monad for handling exceptions, much like `Either`. We can convert a value in the `F` monad into a value in the `Either` monad by using the `runExcept` function.
 
 ```purs
