@@ -2,6 +2,9 @@ module Main where
 
 import Prelude
 
+import Control.Monad.Except (Except, runExcept)
+import Data.Either (Either(..))
+import Data.List.Types (NonEmptyList)
 import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple, fst, snd)
 import Effect (Effect)
@@ -12,7 +15,10 @@ import Flame (Html, QuerySelector(..), Subscription, (:>))
 import Flame as App
 import Flame.Html.Attribute (id, onClick)
 import Flame.Html.Element (main, h1_, text, button, p_)
+import Flame.Serialization (unsafeUnserialize)
 import Flame.Subscription (onCustomEvent)
+import Foreign (Foreign, ForeignError, readString, unsafeToForeign)
+import Foreign.Index ((!))
 import Web.Event.Event (EventType(..))
 
 -- import Debug (spy)
@@ -29,6 +35,20 @@ type Flags =
 type TimeRecord =
   { time :: String
   }
+
+-- recreating Elm type alias Decoder
+type Decoder a = Foreign -> Except (NonEmptyList ForeignError) a
+
+decoder :: Decoder TimeRecord
+decoder value = do
+  time <- value ! "time" >>= readString
+  pure { time }
+
+fromJson :: Foreign -> Msg
+fromJson value =
+  case runExcept (decoder value) of
+    Right timeRecord -> GotTimeRecord timeRecord
+    Left _ -> Randomize
 
 -- recreating Elm type alias `Cmd`
 type Cmd msg = Aff (Maybe msg)
@@ -56,7 +76,8 @@ update model = case _ of
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
-  [ onCustomEvent (EventType "time") (\timeRecord -> GotTimeRecord timeRecord)
+  -- [ onCustomEvent (EventType "time") (\timeRecord -> GotTimeRecord timeRecord)
+  [ onCustomEvent (EventType "time") (unsafeToForeign >>> fromJson)
   ]
 
 view ∷ Model -> Html Msg
