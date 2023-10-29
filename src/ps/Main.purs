@@ -1,13 +1,4 @@
-module Main
-  ( Cmd
-  , Model
-  , Msg(..)
-  , init
-  , start
-  , subscribe
-  , update
-  , view
-  ) where
+module Main where
 
 import Prelude
 
@@ -24,6 +15,8 @@ import Flame.Html.Element (main, h1_, text, button, p_)
 import Flame.Subscription (onCustomEvent)
 import Web.Event.Event (EventType(..))
 
+-- import Debug (spy)
+
 type Model =
   { count :: Int
   , time :: String
@@ -33,13 +26,17 @@ type Flags =
   { initialCount :: Int
   }
 
+type TimeRecord =
+  { time :: String
+  }
+
 -- recreating Elm type alias `Cmd`
 type Cmd msg = Aff (Maybe msg)
 
 init :: Tuple Model (Array (Cmd Msg))
 init =
   { count: 0
-  , time: "Waiting for tick…"
+  , time: "Waiting for time…"
   } :> []
 
 data Msg
@@ -47,7 +44,7 @@ data Msg
   | Decrement
   | Randomize
   | GotRandom Int
-  | GotTick String
+  | GotTimeRecord TimeRecord
 
 update ∷ Model -> Msg -> Tuple Model (Array (Cmd Msg))
 update model = case _ of
@@ -55,11 +52,11 @@ update model = case _ of
   Decrement -> model { count = model.count - 1 } :> []
   Randomize -> model :> [ Just <<< GotRandom <$> liftEffect (randomInt 1 100) ]
   GotRandom int -> model { count = int } :> []
-  GotTick timeStr -> model { time = timeStr } :> []
+  GotTimeRecord { time } -> model { time = time } :> []
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
-  [ onCustomEvent (EventType "tick") (fromMaybe "???" >>> GotTick)
+  [ onCustomEvent (EventType "time") (fromMaybe { time: "???" } >>> GotTimeRecord)
   ]
 
 view ∷ Model -> Html Msg

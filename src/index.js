@@ -3,9 +3,9 @@ import { start } from '../output/Main/index.js'
 start({ initialCount: 100})()
 
 setInterval(() => {
-    document.dispatchEvent(new CustomEvent("tick",{ detail: JSON.stringify(
+    document.dispatchEvent(new CustomEvent("time",{ detail: JSON.stringify(
         { time: new Date().toISOString() }
     )}))
 }, 1000)
 
-document.addEventListener("tick", ({detail}) => console.log(JSON.parse(detail)), false)
+document.addEventListener("time", ({detail}) => console.log(JSON.parse(detail)), false)
