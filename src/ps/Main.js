@@ -1,3 +1,1 @@
-export function getMs() {
-    return Date.now()
-}
+export const multiply = a => b => a * b

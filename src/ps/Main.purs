@@ -15,14 +15,13 @@ import Flame.Html.Element (main, h1_, text, button, p_)
 import Flame.Subscription (onCustomEvent)
 import Web.Event.Event (EventType(..))
 
-foreign import getMs :: Unit -> Int
+foreign import multiply :: Int -> Int -> Int
 
 -- import Debug (spy)
 
 type Model =
   { count :: Int
   , time :: String
-  , ms :: Int
   }
 
 type Flags =
@@ -40,7 +39,6 @@ init :: Tuple Model (Array (Cmd Msg))
 init =
   { count: 0
   , time: "Waiting for time…"
-  , ms: getMs unit
   } :> []
 
 data Msg
@@ -49,16 +47,16 @@ data Msg
   | Randomize
   | GotRandom Int
   | GotTimeRecord TimeRecord
-  | GetTimeMs
+  | DoubleCount
 
 update ∷ Model -> Msg -> Tuple Model (Array (Cmd Msg))
-update model = case _ of
-  Increment -> model { count = model.count + 1 } :> []
-  Decrement -> model { count = model.count - 1 } :> []
+update model@{ count } = case _ of
+  Increment -> model { count = count + 1 } :> []
+  Decrement -> model { count = count - 1 } :> []
   Randomize -> model :> [ Just <<< GotRandom <$> liftEffect (randomInt 1 100) ]
   GotRandom int -> model { count = int } :> []
   GotTimeRecord { time } -> model { time = time } :> []
-  GetTimeMs -> model { ms = getMs unit } :> []
+  DoubleCount -> model { count = multiply count 2 } :> []
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
@@ -66,16 +64,15 @@ subscribe =
   ]
 
 view ∷ Model -> Html Msg
-view { count, time, ms } =
+view { count, time } =
   main [ id "main" ]
     [ h1_ "Flame example"
     , button [ onClick Decrement ] "-"
     , text (show count)
     , button [ onClick Increment ] "+"
+    , button [ onClick DoubleCount ] "Double"
     , p_ [ button [ onClick Randomize ] "Random" ]
     , p_ time
-    , p_ [ button [ onClick GetTimeMs ] "Get milliseconds" ]
-    , p_ (show ms)
     ]
 
 start ∷ Flags -> Effect Unit
