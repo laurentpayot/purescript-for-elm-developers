@@ -1,11 +1,10 @@
 {
-  "name": "purescript-counter-web-app",
+  "name": "purescript-app-example",
   "version": "0.1.0",
-  "description": "PureScript counter web app using Flame",
+  "description": "PureScript example app Flame",
   "keywords": [
     "PureScript",
     "counter",
-    "web",
     "app",
     "Flame"
   ],
