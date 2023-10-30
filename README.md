@@ -30,15 +30,16 @@ Based on information picked from:
 
 | **Elm**                                  | **Purescript**                           | **Notes** |
 | ---------------------------------------- | ---------------------------------------- | --------- |
+| `()` | [unit](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Unit#v:unit) |
 | [identity](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#identity) | [identity](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Function#v:identity) |
 | [always](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#always) | [const](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Function#v:const) |
 | [never](https://package.elm-lang.org/packages/elm/core/latest/Basics#never) | [absurd](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Void#v:absurd) |
 | [toString](http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#toString) | [show](https://pursuit.purescript.org/packages/purescript-prelude) |
 | `>>`                                     | `>>>`                                    |           |
 | `<<`                                     | `<<<`                                    |           |
-| \|>                                      | `#`                                      |           |
-| <\|                                      | `$`                                      |           |
-| ++                                       | <>                                       | [`Semigroup`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Semigroup#t:Semigroup) concatenation (`String`, `Array`, `List`, `Tuple`…)|
+| `\|>`                                    | `#`                                      |           |
+| `<\|`                                    | `$`                                      |           |
+| `++`                                     | `<>`                                     | [`Semigroup`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Semigroup#t:Semigroup) concatenation (`String`, `Array`, `List`, `Tuple`…)|
 
 ## Type signatures
 
