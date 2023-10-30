@@ -975,11 +975,7 @@ An alternative is to use curried functions in the native module, using multiple 
 ```js
 // JavaScript
 
-export function calculateInterest(amount) {
-  return function(months) {
-    return amount * Math.exp(0.1, months)
-  }
-}
+export const calculateInterest = amount => months => amount * Math.exp(0.1, months)
 ```
 
 This time, we can assign the curried function type directly:
