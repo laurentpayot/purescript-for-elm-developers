@@ -15,11 +15,14 @@ import Flame.Html.Element (main, h1_, text, button, p_)
 import Flame.Subscription (onCustomEvent)
 import Web.Event.Event (EventType(..))
 
+foreign import getMs :: Unit -> Int
+
 -- import Debug (spy)
 
 type Model =
   { count :: Int
   , time :: String
+  , ms :: Int
   }
 
 type Flags =
@@ -37,6 +40,7 @@ init :: Tuple Model (Array (Cmd Msg))
 init =
   { count: 0
   , time: "Waiting for time…"
+  , ms: getMs unit
   } :> []
 
 data Msg
@@ -45,6 +49,7 @@ data Msg
   | Randomize
   | GotRandom Int
   | GotTimeRecord TimeRecord
+  | GetTimeMs
 
 update ∷ Model -> Msg -> Tuple Model (Array (Cmd Msg))
 update model = case _ of
@@ -53,6 +58,7 @@ update model = case _ of
   Randomize -> model :> [ Just <<< GotRandom <$> liftEffect (randomInt 1 100) ]
   GotRandom int -> model { count = int } :> []
   GotTimeRecord { time } -> model { time = time } :> []
+  GetTimeMs -> model { ms = getMs unit } :> []
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
@@ -60,7 +66,7 @@ subscribe =
   ]
 
 view ∷ Model -> Html Msg
-view { count, time } =
+view { count, time, ms } =
   main [ id "main" ]
     [ h1_ "Flame example"
     , button [ onClick Decrement ] "-"
@@ -68,6 +74,8 @@ view { count, time } =
     , button [ onClick Increment ] "+"
     , p_ [ button [ onClick Randomize ] "Random" ]
     , p_ time
+    , p_ [ button [ onClick GetTimeMs ] "Get milliseconds" ]
+    , p_ (show ms)
     ]
 
 start ∷ Flags -> Effect Unit
