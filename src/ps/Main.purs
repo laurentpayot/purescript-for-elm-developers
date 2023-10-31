@@ -2,26 +2,32 @@ module Main where
 
 import Prelude
 
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Tuple (Tuple, fst, snd)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
+import Effect.Class.Compat (fromEffectFnAff)
 import Effect.Random (randomInt)
 import Flame (Html, QuerySelector(..), Subscription, (:>))
 import Flame as App
-import Flame.Html.Attribute (id, onClick)
-import Flame.Html.Element (main, h1_, text, button, p_)
+import Flame.Html.Attribute (id, onClick, src)
+import Flame.Html.Element (main, h1_, text, button, p_, img')
 import Flame.Subscription (onCustomEvent)
 import Web.Event.Event (EventType(..))
 
 foreign import multiply :: Int -> Int -> Int
+foreign import catBase64_ :: String -> Aff String
+
+catBase64 :: String -> Aff String
+catBase64 a b = fromEffectFnAff $ catBase64_ a b
 
 -- import Debug (spy)
 
 type Model =
   { count :: Int
   , time :: String
+  , cat :: Maybe String
   }
 
 type Flags =
@@ -39,6 +45,7 @@ init :: Tuple Model (Array (Cmd Msg))
 init =
   { count: 0
   , time: "Waiting for time…"
+  , cat: Nothing
   } :> []
 
 data Msg
@@ -48,6 +55,8 @@ data Msg
   | GotRandom Int
   | GotTimeRecord TimeRecord
   | DoubleCount
+  | GetCat
+  | GotCat String
 
 update ∷ Model -> Msg -> Tuple Model (Array (Cmd Msg))
 update model@{ count } = case _ of
@@ -57,6 +66,8 @@ update model@{ count } = case _ of
   GotRandom int -> model { count = int } :> []
   GotTimeRecord { time } -> model { time = time } :> []
   DoubleCount -> model { count = multiply count 2 } :> []
+  GetCat -> model :> [ Just <<< GotCat <$> catBase64 count ]
+  GotCat base64 -> model { cat = Just base64 } :> []
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
@@ -67,12 +78,16 @@ view ∷ Model -> Html Msg
 view { count, time } =
   main [ id "main" ]
     [ h1_ "Flame example"
+    , p_ time
     , button [ onClick Decrement ] "-"
     , text (show count)
     , button [ onClick Increment ] "+"
     , button [ onClick DoubleCount ] "Double"
     , p_ [ button [ onClick Randomize ] "Random" ]
-    , p_ time
+    , p_
+        [ button [ onClick GetCat ] "Cat"
+        , img [ src ("data:image/png;base64," <> fromMaybe "" cat) ]
+        ]
     ]
 
 start ∷ Flags -> Effect Unit
