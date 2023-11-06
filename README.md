@@ -554,12 +554,10 @@ Multiple constraints can be specified by using the => symbol multiple times:
 
 ```purs
 showCompare :: forall a. Ord a => Show a => a -> a -> String
-showCompare a1 a2 | a1 < a2 =
-  show a1 <> " is less than " <> show a2
-showCompare a1 a2 | a1 > a2 =
-  show a1 <> " is greater than " <> show a2
-showCompare a1 a2 =
-  show a1 <> " is equal to " <> show a2
+showCompare a1 a2
+  | a1 < a2 = show a1 <> " is less than " <> show a2
+  | a1 > a2 = show a1 <> " is greater than " <> show a2
+  | otherwise = show a1 <> " is equal to " <> show a2
 ```
 
 The implementation of type class instances can depend on other type class instances. Those instances should be grouped in parentheses and separated by commas on the left-hand side of the `=>` symbol:

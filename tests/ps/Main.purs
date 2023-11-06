@@ -8,7 +8,7 @@ import Data.Either (Either(..))
 import Data.Validation.Semigroup (V, invalid, isValid)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
-import Effect.Console (logShow)
+import Effect.Console (logShow, log)
 
 newtype Score = Score Int
 
@@ -82,6 +82,12 @@ derive instance Generic MyADT _
 instance Show MyADT where
   show = genericShow
 
+showCompare :: forall a. Ord a => Show a => a -> a -> String
+showCompare a1 a2
+  | a1 < a2 = show a1 <> " is less than " <> show a2
+  | a1 > a2 = show a1 <> " is greater than " <> show a2
+  | otherwise = show a1 <> " is equal to " <> show a2
+
 main :: Effect Unit
 main = do
 
@@ -117,3 +123,7 @@ main = do
 
   -- logs `[Some,(Arbitrary 1),(Contents 2.0 "Three")]`
   logShow [ Some, Arbitrary 1, Contents 2.0 "Three" ]
+
+  log $ showCompare 1 2
+  log $ showCompare 2 1
+  log $ showCompare 1 1
