@@ -7,20 +7,16 @@ import Data.Tuple (Tuple, fst, snd)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
-import Effect.Class.Compat (fromEffectFnAff)
 import Effect.Random (randomInt)
 import Flame (Html, QuerySelector(..), Subscription, (:>))
 import Flame as App
 import Flame.Html.Attribute (id, onClick, src)
-import Flame.Html.Element (main, h1_, text, button, p_, img')
+import Flame.Html.Element (main, h1_, text, button, p_, img)
 import Flame.Subscription (onCustomEvent)
 import Web.Event.Event (EventType(..))
 
 foreign import multiply :: Int -> Int -> Int
-foreign import catBase64_ :: String -> Aff String
-
-catBase64 :: String -> Aff String
-catBase64 a b = fromEffectFnAff $ catBase64_ a b
+foreign import catBase64 :: String -> Aff String
 
 -- import Debug (spy)
 
@@ -66,7 +62,7 @@ update model@{ count } = case _ of
   GotRandom int -> model { count = int } :> []
   GotTimeRecord { time } -> model { time = time } :> []
   DoubleCount -> model { count = multiply count 2 } :> []
-  GetCat -> model :> [ Just <<< GotCat <$> catBase64 count ]
+  GetCat -> model :> [ Just <<< GotCat <$> catBase64 (show count) ]
   GotCat base64 -> model { cat = Just base64 } :> []
 
 subscribe ∷ Array (Subscription Msg)
@@ -75,7 +71,7 @@ subscribe =
   ]
 
 view ∷ Model -> Html Msg
-view { count, time } =
+view { count, time, cat } =
   main [ id "main" ]
     [ h1_ "Flame example"
     , p_ time

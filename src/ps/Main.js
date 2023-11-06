@@ -1,6 +1,6 @@
 export const multiply = a => b => a * b
 
-export const catBase64_ = text => (onError, onSuccess) => {
+export const catBase64 = text => (onError, onSuccess) => {
     // not awaiting fetch but returning cancel function
     fetch(`https://cataas.com/cat/says/${text}?fontSize=50&fontColor=red`)
     .then(async response => {
