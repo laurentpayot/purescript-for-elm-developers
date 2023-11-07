@@ -920,7 +920,7 @@ When we have an Effect-based computation that we want to run in some other monad
 
 ```purs
 class (Monad m) ⇐ MonadEffect m where
--- liftEffect :: forall a. Effect a -> m a
+-- same as liftEffect :: forall a. Effect a -> m a
   liftEffect :: Effect ~> m
 ```
 
