@@ -813,6 +813,31 @@ class Monad m where
   bind :: m a -> (a -> m b) -> m b
 ```
 
+So, to define a monad we need to define the `map`, `apply`, `pure` and `bind` operations:
+
+```purs
+data Box a =
+  Box a
+
+instance Functor Box where
+  map :: forall a b. (a -> b) -> Box a -> Box  b
+  map f (Box a) = Box (f a)
+
+instance Apply Box where
+  apply :: forall a b. Box (a -> b) -> Box a -> Box  b
+  apply (Box f) (Box a) = Box (f a)
+
+instance Applicative Box where
+  pure :: forall a. a -> Box a
+  pure a = Box a
+
+instance Bind Box where
+  bind :: forall a b. Box a -> (a -> Box b) -> Box b
+  bind (Box a) f = f a
+
+instance Monad Box
+```
+
 Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something "fails" the operation aborts.
 You are in a monadic context when using [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task#andThen) in Elm.
 
