@@ -1084,6 +1084,10 @@ This time, we can assign the curried function type directly:
 foreign import calculateInterest :: Number -> Number -> Number
 ```
 
+#### Promises
+
+<!-- TODO https://github.com/nwolverson/purescript-aff-promise/tree/v4.0.0#consuming-promises-promise-to-aff -->
+
 ## Sanitizing Foreign Data
 
 It is important to sanitize data when working with values returned from Javascript functions using the FFI. For this we will use  [`purescript-foreign-generic`](https://pursuit.purescript.org/packages/purescript-foreign-generic).
