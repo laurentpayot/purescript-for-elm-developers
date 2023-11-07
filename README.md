@@ -692,7 +692,7 @@ The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/doc
 ```purs
 class Applicative f where
   pure :: a -> f a
-  (<*>) :: f (a -> b) -> f a -> f b -- "inherited" from the `Apply` type class
+  apply :: f (a -> b) -> f a -> f b -- "inherited" from the `Apply` type class
 ```
 
 Applicative lets us perform N operations independently, then it aggregates the results for us.
@@ -810,7 +810,7 @@ The [Monad](https://pursuit.purescript.org/packages/purescript-prelude/docs/Cont
 
 ```purs
 class Monad m where
-  (>>=) :: m a -> (a -> m b) -> m b
+  bind :: m a -> (a -> m b) -> m b
 ```
 
 Monadic operations operate sequentially not concurrently. That’s great when we have a dependency between the operations e.g. lookup user_id based on email then fetch the inbox based on the user_id. But for independent operations monadic calls are very inefficient as they are inherently sequential. Monads fail fast which makes them poor for form validation and similar use cases. Once something "fails" the operation aborts.
