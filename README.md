@@ -981,6 +981,8 @@ main = launchAff_ do
   liftEffect $ log "Fiber 3 has finished. All fibers have finished their computation."
 ```
 
+If instead of `forkAff` we used [`suspendAff`](https://pursuit.purescript.org/packages/purescript-aff/docs/Effect.Aff#v:suspendAff), then the fibers would not be run *concurrently* as soon as defined, but they would be suspended and ran *sequentially* one by one after their respective `joinFiber`.
+
 ## Foreign Function Interface (FFI)
 
 ### Calling PureScript from JavaScript
