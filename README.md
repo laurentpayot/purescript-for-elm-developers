@@ -946,6 +946,41 @@ main = launchAff_ do
     clearTimeout timeoutID
 ```
 
+We can run multiple computations concurrently with [`forkAff`](https://pursuit.purescript.org/packages/purescript-aff/docs/Effect.Aff#v:forkAff). Then, we'll use [`joinFiber`](https://pursuit.purescript.org/packages/purescript-aff/docs/Effect.Aff#v:joinFiber) to ensure all computations are finished before we do another computation.
+
+```purs
+import Effect (Effect)
+import Effect.Aff (Milliseconds(..), delay, forkAff, joinFiber, launchAff_)
+
+main :: Effect Unit
+main = launchAff_ do
+
+  fiber1 <- forkAff do
+    liftEffect $ log "Fiber 1: Waiting for 1 second until completion."
+    delay $ Milliseconds 1000.0
+    liftEffect $ log "Fiber 1: Finished computation."
+
+  fiber2 <- forkAff do
+    liftEffect $ log "Fiber 2: Computation 1 (takes 300 ms)."
+    delay $ Milliseconds 300.0
+    liftEffect $ log "Fiber 2: Computation 2 (takes 300 ms)."
+    delay $ Milliseconds 300.0
+    liftEffect $ log "Fiber 2: Computation 3 (takes 500 ms)."
+    delay $ Milliseconds 500.0
+    liftEffect $ log "Fiber 2: Finished computation."
+
+  fiber3 <- forkAff do
+    liftEffect $ log "Fiber 3: Nothing to do. Just return immediately."
+    liftEffect $ log "Fiber 3: Finished computation."
+
+  joinFiber fiber1
+  liftEffect $ log "Fiber 1 has finished. Now joining on fiber 2"
+  joinFiber fiber2
+  liftEffect $ log "Fiber 3 has finished. Now joining on fiber 3"
+  joinFiber fiber3
+  liftEffect $ log "Fiber 3 has finished. All fibers have finished their computation."
+```
+
 ## Foreign Function Interface (FFI)
 
 ### Calling PureScript from JavaScript
