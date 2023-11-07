@@ -894,7 +894,7 @@ main = do
   log $ show n
 ```
 
-The above example works because `log` returns `Effect Unit`.
+The above example works because `log` and `random` return `Effect Unit`.
 We can use the [`void`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Prelude#v:void) function to ignore the type wrapped by a Functor and replace it with `Unit`:
 
 ```purs
@@ -917,7 +917,12 @@ main = do
 
 Using asynchronous effects in PureScript is like using promises in JavaScript.
 
-<!-- TODO -->
+
+| Aff    | JavaScript |
+|--------|------------|
+| [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task) | `Promise` |
+| [`Aff`](https://package.elm-lang.org/packages/elm/core/latest/Aff) | `Promise` |
+
 
 ## Foreign Function Interface (FFI)
 
