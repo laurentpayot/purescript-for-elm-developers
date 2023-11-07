@@ -252,7 +252,7 @@ When using patterns to define a function at the top level, guards appear after a
 ```purs
 greater x y
   | x > y = true
-  otherwise = false
+  | otherwise = false
 ```
 
 Exhaustibility of patterns is checked by the compiler. To be considered exhaustive, guards must clearly include a case that is always true. `otherwise` is a synonym for `true` and is commonly used in guards.
