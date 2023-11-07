@@ -8,6 +8,7 @@ import Data.Show.Generic (genericShow)
 import Data.Validation.Semigroup (V, invalid, isValid)
 import Effect (Effect)
 import Effect.Console (logShow, log)
+import Effect.Random (random)
 import Test.Assert (assert)
 
 newtype Score = Score Int
@@ -129,3 +130,15 @@ main = do
   log $ showCompare 1 2
   log $ showCompare 2 1
   log $ showCompare 1 1
+
+  (log "Below is a random number between 0.0 and 1.0:") >>=
+    ( \_ ->
+        random >>=
+          ( \n ->
+              log $ show n
+          )
+    )
+
+  log "Below is a random number between 0.0 and 1.0:"
+  n <- random
+  log $ show n

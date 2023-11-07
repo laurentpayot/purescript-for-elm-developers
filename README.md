@@ -868,15 +868,20 @@ foo = do
   print z -- not `value <- computation` but just `computation`
 ```
 
-The `main` function of PureScript programs uses the `Effect` monad:
+## Effects
+
+The `main` function of PureScript programs uses the `Effect` monad for side effects:
 
 ```purs
+import Effect.Random (random) -- random :: Effect Number
+
 main :: Effect Unit
-main = (log "This is outputted first") >>= (\_ ->
-          (log "This is outputted second") >>= (\_ ->
-            log "This is outputted third"
-          )
-        )
+main =
+  (log "Below is a random number between 0.0 and 1.0:") >>= (\_ ->
+    random >>= (\n->
+      log $ show n
+    )
+  )
 ```
 
 and is more readable using the do-notation:
@@ -884,9 +889,9 @@ and is more readable using the do-notation:
 ```purs
 main :: Effect Unit
 main = do
-  log "This is outputted first"
-  log "This is outputted second"
-  log "This is outputted third"
+  log "Below is a random number between 0.0 and 1.0:"
+  n <- random
+  log $ show n
 ```
 
 The above example works because `log` returns `Effect Unit`.
@@ -907,6 +912,12 @@ main = do
   void $ foo 42
   log "Done!"
 ```
+
+## Asynchronous Effects (`Aff`)
+
+Using asynchronous effects in PureScript is like using promises in JavaScript.
+
+<!-- TODO -->
 
 ## Foreign Function Interface (FFI)
 
