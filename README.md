@@ -894,7 +894,7 @@ main = do
   log $ show n
 ```
 
-The above example works because `log` and `random` return `Effect Unit`.
+The above example works because the last line has a `log` that returns `Effect Unit`.
 We can use the [`void`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Prelude#v:void) function to ignore the type wrapped by a Functor and replace it with `Unit`:
 
 ```purs
@@ -904,25 +904,47 @@ void :: forall f a. Functor f => f a -> f Unit
 That is useful when using the do-notation:
 
 ```purs
-foo :: Int -> Effect Int
-
 main :: Effect Unit
 main = do
-  log "Starting..."
-  void $ foo 42
-  log "Done!"
+  log "Generating random number..."
+  void random
 ```
 
 ## Asynchronous Effects (`Aff`)
 
 Using asynchronous effects in PureScript is like using promises in JavaScript.
 
+PureScript applications use the `main` function in the context of the `Effect` monad. To start the `App` monad context from the `Effect` context, we use the [`launchAff`](https://pursuit.purescript.org/packages/purescript-aff/docs/Effect.Aff#v:launchAff) function (or `launchAff_`  which is `void $ launchAff`).
 
-| Aff    | JavaScript |
-|--------|------------|
-| [`Task`](https://package.elm-lang.org/packages/elm/core/latest/Task) | `Promise` |
-| [`Aff`](https://package.elm-lang.org/packages/elm/core/latest/Aff) | `Promise` |
+When we have an Effect-based computation that we want to run in some other monadic context, we can use `liftEffect` from [Effect.Class](https://pursuit.purescript.org/packages/purescript-effect/docs/Effect.Class) if the target monad has an instance for `MonadEffect`:
 
+```purs
+class (Monad m) ⇐ MonadEffect m where
+-- liftEffect :: forall a. Effect a -> m a
+  liftEffect :: Effect ~> m
+```
+
+`Aff` has an instance for `MonadEffect`, so we can lift `Effect`-based computations (such as `log`) into an `Aff` monadic context:
+
+```purs
+import Prelude
+
+import Effect (Effect)
+import Effect.Aff (Milliseconds(..), delay, launchAff_)
+import Effect.Class (liftEffect)
+import Effect.Console (log)
+import Effect.Timer (setTimeout, clearTimeout)
+
+main :: Effect Unit
+main = launchAff_ do
+  timeoutID <- liftEffect $ setTimeout 1000 (log "This will run after 1 second")
+
+  delay (Milliseconds 1300.0)
+
+  liftEffect do
+    log "Now cancelling timeout"
+    clearTimeout timeoutID
+```
 
 ## Foreign Function Interface (FFI)
 

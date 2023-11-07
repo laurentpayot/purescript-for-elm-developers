@@ -10,6 +10,9 @@ import Effect (Effect)
 import Effect.Console (logShow, log)
 import Effect.Random (random)
 import Test.Assert (assert)
+import Effect.Aff (Milliseconds(..), delay, launchAff_)
+import Effect.Class (liftEffect)
+import Effect.Timer (setTimeout, clearTimeout)
 
 newtype Score = Score Int
 
@@ -142,3 +145,15 @@ main = do
   log "Below is a random number between 0.0 and 1.0:"
   n <- random
   log $ show n
+
+  log "Generating random number..."
+  void random
+
+  launchAff_ do
+    timeoutID <- liftEffect $ setTimeout 1000 (log "This will run after 1 second")
+
+    delay (Milliseconds 1300.0)
+
+    liftEffect do
+      log "Now cancelling timeout"
+      clearTimeout timeoutID
