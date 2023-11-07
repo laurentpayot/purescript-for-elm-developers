@@ -2,13 +2,13 @@ module Test.Main (main) where
 
 import Prelude
 
-import Effect (Effect)
-import Test.Assert (assert)
 import Data.Either (Either(..))
-import Data.Validation.Semigroup (V, invalid, isValid)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
+import Data.Validation.Semigroup (V, invalid, isValid)
+import Effect (Effect)
 import Effect.Console (logShow, log)
+import Test.Assert (assert)
 
 newtype Score = Score Int
 
@@ -42,8 +42,9 @@ badContact :: Contact
 badContact = goodContact { firstName = "", lastName = "" }
 
 nonEmptyEither :: String -> String -> Either String String
-nonEmptyEither fieldName "" = Left $ "Field '" <> fieldName <> "' cannot be empty"
-nonEmptyEither _ value = Right value
+nonEmptyEither fieldName value
+  | value == "" = Left $ "Field '" <> fieldName <> "' cannot be empty"
+  | otherwise = Right value
 
 validateContactEither :: Contact -> Either String Contact
 validateContactEither c = { firstName: _, lastName: _, address: _ }
@@ -54,8 +55,9 @@ validateContactEither c = { firstName: _, lastName: _, address: _ }
 type ErrorMessages = Array String
 
 nonEmptyV :: String -> String -> V ErrorMessages String
-nonEmptyV fieldName "" = invalid [ "Field '" <> fieldName <> "' cannot be empty" ]
-nonEmptyV _ value = pure value
+nonEmptyV fieldName value
+  | value == "" = invalid [ "Field '" <> fieldName <> "' cannot be empty" ]
+  | otherwise = pure value
 
 validateContactV :: Contact -> V ErrorMessages Contact
 validateContactV c = { firstName: _, lastName: _, address: _ }
