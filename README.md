@@ -1086,7 +1086,33 @@ foreign import calculateInterest :: Number -> Number -> Number
 
 #### Promises
 
-<!-- TODO https://github.com/nwolverson/purescript-aff-promise/tree/v4.0.0#consuming-promises-promise-to-aff -->
+Promises in JavaScript translate directly to asynchronous effects in PureScript with the help of [`Promise.Aff`](https://pursuit.purescript.org/packages/purescript-js-promise-aff/docs/Promise.Aff).
+
+In JavaScript, you need to wrap asynchronous functions in a PureScript Effect with a "thunk" `() =>` so the function is not considered pure and is run every time:
+
+```js
+// JavaScript
+
+export const catBase64JS = text => fontSize =>
+    async () => {
+        const response = await fetch(`https://cataas.com/cat/says/${text}?fontSize=${fontSize}&fontColor=red`)
+        const array = await response.body.getReader().read()
+        return btoa(String.fromCharCode.apply(null, array.value))
+    }
+```
+
+Then in PureScript use the `toAffE` function:
+
+```purs
+-- PureScript
+
+import Promise.Aff (Promise, toAffE)
+
+foreign import catBase64JS :: String -> Int -> Effect (Promise String)
+
+catBase64 :: String -> Int -> Aff String
+catBase64 text fontSize = toAffE $ catBase64JS text fontSize
+```
 
 ## Sanitizing Foreign Data
 
