@@ -1181,10 +1181,6 @@ runExcept (map unNullOrUndefined <$> decodeJSON "[1, 2, null]" :: F (Array (Null
 -- Right [(Just 1),(Just 2),Nothing]
 ```
 
-## Vite setup
-
-When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/items/nwolverson.ide-purescript) the project is built every time you save a file. There is no need for a special Vite plugin. Just import `output/Main/index.js` in your Vite `main.js` file.
-
 ## The Flame front-end framework
 
 [Halogen](https://purescript-halogen.github.io/purescript-halogen/) is the most used front-end framework for PureScript but we will use the [**Flame**](https://flame.asafe.dev/) framework because:
@@ -1194,3 +1190,7 @@ When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/i
 - Server Side Rendering is [supported](https://flame.asafe.dev/rendering).
 
 Note: If GitHub errors like "Empty reply from server" during `pnpm spago install flame`, remove the erroneous packages directories from the /.spago folder and try `pnpm spago build` to reinstall them.
+
+### Vite setup
+
+When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/items/nwolverson.ide-purescript) the project is built every time you save a file. There is no need for a special Vite plugin. Just import `output/Main/index.js` in your Vite `main.js` file.
