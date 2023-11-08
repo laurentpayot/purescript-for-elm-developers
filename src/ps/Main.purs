@@ -13,12 +13,18 @@ import Flame as App
 import Flame.Html.Attribute (id, onClick, src)
 import Flame.Html.Element (main, h1_, text, button, p_, img)
 import Flame.Subscription (onCustomEvent)
+import Promise.Aff (Promise, toAff)
 import Web.Event.Event (EventType(..))
 
-foreign import multiply :: Int -> Int -> Int
-foreign import catBase64 :: String -> Aff String
-
 -- import Debug (spy)
+
+foreign import multiply :: Int -> Int -> Int
+foreign import catBase64JS :: String -> Promise String
+
+-- TODO fix glitch (use toAffE?????)
+
+catBase64 :: String -> Aff String
+catBase64 = catBase64JS >>> toAff
 
 type Model =
   { count :: Int

@@ -20,6 +20,7 @@ to generate this file without the comments in this block.
   , "either"
   , "flame"
   , "foreign"
+  , "js-promise-aff"
   , "js-timers"
   , "maybe"
   , "prelude"
