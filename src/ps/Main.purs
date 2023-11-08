@@ -82,8 +82,10 @@ view { count, time, cat } =
     , button [ onClick Decrement ] "-"
     , text (show count)
     , button [ onClick Increment ] "+"
-    , button [ onClick DoubleCount ] "Double"
-    , p_ [ button [ onClick Randomize ] "Random" ]
+    , p_
+        [ button [ onClick DoubleCount ] "Double"
+        , button [ onClick Randomize ] "Random"
+        ]
     , p_ [ button [ onClick GetCat ] "Cat" ]
     , if isJust cat then
         p_ [ img [ src ("data:image/png;base64," <> fromMaybe "" cat), height "200px" ] ]
