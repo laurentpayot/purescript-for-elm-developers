@@ -2,7 +2,7 @@ module Main where
 
 import Prelude
 
-import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Tuple (Tuple, fst, snd)
 import Effect (Effect)
 import Effect.Aff (Aff)
@@ -10,7 +10,7 @@ import Effect.Class (liftEffect)
 import Effect.Random (randomInt)
 import Flame (Html, QuerySelector(..), Subscription, (:>))
 import Flame as App
-import Flame.Html.Attribute (id, onClick, src)
+import Flame.Html.Attribute (id, onClick, src, height)
 import Flame.Html.Element (main, h1_, text, button, p_, img)
 import Flame.Subscription (onCustomEvent)
 import Promise.Aff (Promise, toAff)
@@ -19,12 +19,12 @@ import Web.Event.Event (EventType(..))
 -- import Debug (spy)
 
 foreign import multiply :: Int -> Int -> Int
-foreign import catBase64JS :: String -> Promise String
+foreign import catBase64JS :: String -> Int -> Promise String
 
 -- TODO fix glitch (use toAffE?????)
 
-catBase64 :: String -> Aff String
-catBase64 = catBase64JS >>> toAff
+catBase64 :: String -> Int -> Aff String
+catBase64 text fontSize = toAff $ catBase64JS text fontSize
 
 type Model =
   { count :: Int
@@ -68,7 +68,7 @@ update model@{ count } = case _ of
   GotRandom int -> model { count = int } :> []
   GotTimeRecord { time } -> model { time = time } :> []
   DoubleCount -> model { count = multiply count 2 } :> []
-  GetCat -> model :> [ Just <<< GotCat <$> catBase64 (show count) ]
+  GetCat -> model :> [ Just <<< GotCat <$> catBase64 (show count) 100 ]
   GotCat base64 -> model { cat = Just base64 } :> []
 
 subscribe ∷ Array (Subscription Msg)
@@ -86,10 +86,11 @@ view { count, time, cat } =
     , button [ onClick Increment ] "+"
     , button [ onClick DoubleCount ] "Double"
     , p_ [ button [ onClick Randomize ] "Random" ]
-    , p_
-        [ button [ onClick GetCat ] "Cat"
-        , img [ src ("data:image/png;base64," <> fromMaybe "" cat) ]
-        ]
+    , p_ [ button [ onClick GetCat ] "Cat" ]
+    , if isJust cat then
+        p_ [ img [ src ("data:image/png;base64," <> fromMaybe "" cat), height "200px" ] ]
+      else
+        p_ "No cat yet"
     ]
 
 start ∷ Flags -> Effect Unit
