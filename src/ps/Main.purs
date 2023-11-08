@@ -13,18 +13,16 @@ import Flame as App
 import Flame.Html.Attribute (id, onClick, src, height)
 import Flame.Html.Element (main, h1_, text, button, p_, img)
 import Flame.Subscription (onCustomEvent)
-import Promise.Aff (Promise, toAff)
+import Promise.Aff (Promise, toAffE)
 import Web.Event.Event (EventType(..))
 
 -- import Debug (spy)
 
 foreign import multiply :: Int -> Int -> Int
-foreign import catBase64JS :: String -> Int -> Promise String
-
--- TODO fix glitch (use toAffE?????)
+foreign import catBase64JS :: String -> Int -> Effect (Promise String)
 
 catBase64 :: String -> Int -> Aff String
-catBase64 text fontSize = toAff $ catBase64JS text fontSize
+catBase64 text fontSize = toAffE $ catBase64JS text fontSize
 
 type Model =
   { count :: Int
