@@ -637,7 +637,7 @@ threeAreEqual :: forall a. Eq a => a -> a -> a -> Boolean
 threeAreEqual a1 a2 a3 = a1 == a2 && a2 == a3
 ```
 
-This type says that we can call `threeAreEqual` with any choice of type `a`, as long as there is an `Eq` instance available for `a` in one of the imported modules.
+This type says that we can call `threeAreEqual` with any choice of type `a`, as long as there is an `Eq` instance available for `a`.
 
 Multiple constraints can be specified by using the => symbol multiple times:
 
