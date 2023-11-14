@@ -14,6 +14,7 @@ import Effect.Random (random)
 import Effect.Timer (setTimeout, clearTimeout)
 import Test.Assert (assert)
 
+
 newtype Score = Score Int
 
 derive newtype instance Semiring Score
@@ -93,6 +94,14 @@ showCompare a1 a2
   | a1 < a2 = show a1 <> " is less than " <> show a2
   | a1 > a2 = show a1 <> " is greater than " <> show a2
   | otherwise = show a1 <> " is equal to " <> show a2
+
+gcd :: Int -> Int -> Int
+gcd n m
+  | n == 0 = m
+  | m == 0 = n
+  | n > m = gcd (n - m) m
+  | otherwise = gcd (m - n) n
+
 
 main :: Effect Unit
 main = do
@@ -213,3 +222,7 @@ main = do
     liftEffect $ log "Fiber 3 has finished. Now joining on fiber 3"
     joinFiber fiber3
     liftEffect $ log "Fiber 3 has finished. All fibers have finished their computation."
+
+  assert $ gcd 15 20 == 5
+  assert $ gcd 20 15 == 5
+  assert $ gcd 15 15 == 15
