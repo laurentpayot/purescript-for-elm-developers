@@ -539,34 +539,6 @@ class Functor f where
   map :: forall a b. (a -> b) -> f a -> f b
 ```
 
-## Type class constraints
-
-Here is a type class constraint `Eq a`, separated from the rest of the type by a double arrow `=>`:
-
-```purs
-threeAreEqual :: forall a. Eq a => a -> a -> a -> Boolean
-threeAreEqual a1 a2 a3 = a1 == a2 && a2 == a3
-```
-
-This type says that we can call `threeAreEqual` with any choice of type `a`, as long as there is an `Eq` instance available for `a` in one of the imported modules.
-
-Multiple constraints can be specified by using the => symbol multiple times:
-
-```purs
-showCompare :: forall a. Ord a => Show a => a -> a -> String
-showCompare a1 a2
-  | a1 < a2 = show a1 <> " is less than " <> show a2
-  | a1 > a2 = show a1 <> " is greater than " <> show a2
-  | otherwise = show a1 <> " is equal to " <> show a2
-```
-
-The implementation of type class instances can depend on other type class instances. Those instances should be grouped in parentheses and separated by commas on the left-hand side of the `=>` symbol:
-
-```purs
-instance (Show a, Show b) => Show (Either a b) where
-  ...
-```
-
 ## Type class deriving
 
 The compiler can derive type class instances to spare you the tedium of writing boilerplate. There are a few ways to do this depending on the specific type and class being derived.
@@ -654,6 +626,34 @@ instance Show MyADT where
 
 -- logs `[Some,(Arbitrary 1),(Contents 2.0 "Three")]`
 main = logShow [Some, Arbitrary 1, Contents 2.0 "Three"]
+```
+
+## Type class constraints
+
+Here is a type class constraint `Eq a`, separated from the rest of the type by a double arrow `=>`:
+
+```purs
+threeAreEqual :: forall a. Eq a => a -> a -> a -> Boolean
+threeAreEqual a1 a2 a3 = a1 == a2 && a2 == a3
+```
+
+This type says that we can call `threeAreEqual` with any choice of type `a`, as long as there is an `Eq` instance available for `a` in one of the imported modules.
+
+Multiple constraints can be specified by using the => symbol multiple times:
+
+```purs
+showCompare :: forall a. Ord a => Show a => a -> a -> String
+showCompare a1 a2
+  | a1 < a2 = show a1 <> " is less than " <> show a2
+  | a1 > a2 = show a1 <> " is greater than " <> show a2
+  | otherwise = show a1 <> " is equal to " <> show a2
+```
+
+The implementation of type class instances can depend on other type class instances. Those instances should be grouped in parentheses and separated by commas on the left-hand side of the `=>` symbol:
+
+```purs
+instance (Show a, Show b) => Show (Either a b) where
+  ...
 ```
 
 ## The Warn type class
