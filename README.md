@@ -749,8 +749,9 @@ badContact :: Contact
 badContact = goodContact { firstName = "", lastName = "" }
 
 nonEmptyEither :: String -> String -> Either String String
-nonEmptyEither label "" = Left $ "Field '" <> label <> "' cannot be empty"
-nonEmptyEither _ value = Right value
+nonEmptyEither fieldName value
+  | value == "" = Left $ "Field '" <> fieldName <> "' cannot be empty"
+  | otherwise = Right value
 
 validateContactEither :: Contact -> Either String Contact
 validateContactEither c = { firstName: _, lastName: _, address: _ }
@@ -771,8 +772,9 @@ import Data.Validation.Semigroup (V, invalid, isValid)
 type ErrorMessages = Array String
 
 nonEmptyV :: String -> String -> V ErrorMessages String
-nonEmptyV label "" = invalid [ "Field '" <> label <> "' cannot be empty" ]
-nonEmptyV _ value = pure value
+nonEmptyV fieldName value
+  | value == "" = invalid [ "Field '" <> fieldName <> "' cannot be empty" ]
+  | otherwise = pure value
 
 validateContactV :: Contact -> V ErrorMessages Contact
 validateContactV c = { firstName: _, lastName: _, address: _ }
