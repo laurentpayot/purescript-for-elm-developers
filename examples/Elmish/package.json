@@ -1,0 +1,33 @@
+{
+  "name": "purescript-app-example",
+  "version": "0.1.0",
+  "description": "PureScript example app Elmish",
+  "keywords": [
+    "PureScript",
+    "counter",
+    "app",
+    "Elmish"
+  ],
+  "author": "Laurent Payot",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "spago test",
+    "start": "spago build && vite",
+    "build": "spago build && vite build",
+    "serve": "cd dist && python3 -m http.server 5000",
+    "do-update": "pnpm update --recursive --latest"
+  },
+  "devDependencies": {
+    "purescript": "^0.15.12",
+    "purs-tidy": "^0.10.0",
+    "spago": "^0.21.0",
+    "terser": "^5.22.0",
+    "tslib": "^2.6.2",
+    "vite": "^4.5.0"
+  },
+  "dependencies": {
+    "react": "17",
+    "react-dom": "17"
+  }
+}

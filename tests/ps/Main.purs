@@ -95,12 +95,12 @@ showCompare a1 a2
   | a1 > a2 = show a1 <> " is greater than " <> show a2
   | otherwise = show a1 <> " is equal to " <> show a2
 
-gcd :: Int -> Int -> Int
-gcd n m
+myGCD :: Int -> Int -> Int
+myGCD n m
   | n == 0 = m
   | m == 0 = n
-  | n > m = gcd (n - m) m
-  | otherwise = gcd (m - n) n
+  | n > m = myGCD (n - m) m
+  | otherwise = myGCD (m - n) n
 
 
 main :: Effect Unit
@@ -223,6 +223,6 @@ main = do
     joinFiber fiber3
     liftEffect $ log "Fiber 3 has finished. All fibers have finished their computation."
 
-  assert $ gcd 15 20 == 5
-  assert $ gcd 20 15 == 5
-  assert $ gcd 15 15 == 15
+  assert $ myGCD 15 20 == 5
+  assert $ myGCD 20 15 == 5
+  assert $ myGCD 15 15 == 15
