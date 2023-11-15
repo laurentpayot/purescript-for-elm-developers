@@ -1202,21 +1202,24 @@ In [The state of PureScript 2023 survey results](https://github.com/purescript/s
 
 - [**Halogen**](https://purescript-halogen.github.io/purescript-halogen/) is by far the most used front-end framework for PureScript.
   - *Not* using [The Elm Architecture](https://guide.elm-lang.org/architecture/) ("TEA"). You can create components with it if you’re into that stuff.
+  - Does not have a router. You will have to use [purescript-routing](https://github.com/purescript-contrib/purescript-routing) or [purescript-routing-duplex](https://github.com/natefaubion/purescript-routing-duplex).
+  - You can use [purescript-halogen-store](https://github.com/thomashoneyman/purescript-halogen-store) for global state management.
   - [A bit slower](https://github.com/purescript-halogen/purescript-halogen/issues/632#issuecomment-609952547) than Elm.
   - About twice heavier than Elm with brotli compression for a real world app.
 
 
 - [**Elmish**](https://collegevine.github.io/purescript-elmish/), as its name suggests, uses Elm ideas:
   - (loosely) follows TEA principles, implemented as a thin layer on top of React.
+  - Has [routing capabilities](https://pursuit.purescript.org/packages/purescript-elmish/0.1.0/docs/Elmish.Component#t:ComponentReturnCallback).
   - Bloated with React 17 (I couldn’t figure out how to get it to work with [Preact](https://preactjs.com/)).
   - Seems abandoned as the package maintainer [no longer has the motivation to update it to React 18 and above](https://github.com/collegevine/purescript-elmish/pull/66#issuecomment-1810431289).
 
 - [**Flame**](https://flame.asafe.dev/) is a relatively new framework inspired by Elm:
 
   - The [Flame architecture](https://flame.asafe.dev/events) is inspired by TEA.
+  - Does not have a router. You will have to use [purescript-routing](https://github.com/purescript-contrib/purescript-routing) or [purescript-routing-duplex](https://github.com/natefaubion/purescript-routing-duplex).
   - Performance is [comparable to Elm](https://flame.asafe.dev/benchmarks).
   - Server Side Rendering is [supported](https://flame.asafe.dev/rendering).
-  - Does not have a router. You will have to use [purescript-routing](https://github.com/purescript-contrib/purescript-routing) or [purescript-routing-duplex](https://github.com/natefaubion/purescript-routing-duplex).
 
 ### Flame example
 
