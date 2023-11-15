@@ -12,7 +12,7 @@ based on information picked from:
 - https://www.tobyhobson.com/posts/cats/
 - https://github.com/alpacaaa/zero-bs-haskell
 
-Sometimes I did a shameless copy-paste instead of writing a bad paraphrase. I think it’s fair use but please let me know if I’m infringing any copyright. Feel free to open an issue if you find any mistakes.
+Sometimes I did a shameless copy-paste instead of writing a bad paraphrase. I think it is fair use but please let me know if I’m infringing any copyright. Feel free to open an issue if you find any mistakes.
 
 Happy monad lifting! 🏋
 
