@@ -20,8 +20,6 @@ Happy monad lifting! 🏋
 Laurent
 
 <hr>
-<hr>
-<hr>
 
 ## Common packages
 
