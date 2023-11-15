@@ -1251,4 +1251,4 @@ We only covered the basics of PureScript here. If you want to learn more, check 
 
 ## Stargazers :heart:
 
-[![Stargazers repo roster for @laurentpayot/purescript-for-elm-developers](https://reporoster.com/stars/laurentpayot/purescript-for-elm-developers)](https://github.com/laurentpayot/purescript-for-elm-developers/stargazers)
+[![Stargazers repo roster for @laurentpayot/purescript-for-elm-developers](http://reporoster.com/stars/laurentpayot/purescript-for-elm-developers)](https://github.com/laurentpayot/purescript-for-elm-developers/stargazers)
