@@ -17,6 +17,12 @@ Feel free to open an issue if you find any mistakes.
 
 Happy monad lifting! 🏋
 
+Laurent
+
+<hr>
+<hr>
+<hr>
+
 ## Common packages
 
 | **Elm**                                  | **Purescript**                           | **Notes**                                |
