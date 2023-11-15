@@ -1184,16 +1184,37 @@ runExcept (map unNullOrUndefined <$> decodeJSON "[1, 2, null]" :: F (Array (Null
 -- Right [(Just 1),(Just 2),Nothing]
 ```
 
-## The Flame front-end framework
+## Front-end frameworks
 
-[Halogen](https://purescript-halogen.github.io/purescript-halogen/) is the most used front-end framework for PureScript but we will use the [**Flame**](https://flame.asafe.dev/) framework because:
+In [The state of PureScript 2023 survey results](https://github.com/purescript/survey/blob/main/results/The%20State%20of%20PureScript%202023%20Results.pdf), at page 24, you can see a chart of the most used front-end frameworks:
 
-- The [Flame architecture](https://flame.asafe.dev/events) is inspired by the [Elm architecture](https://guide.elm-lang.org/architecture/).
-- Performance is [comparable to Elm](https://flame.asafe.dev/benchmarks).
-- Server Side Rendering is [supported](https://flame.asafe.dev/rendering).
+<img src="ps-frameworks-2023.png" alt="PureScript frameworks usage chart for 2023" width="600">
 
-Note: If GitHub errors like "Empty reply from server" during `pnpm spago install flame`, remove the erroneous packages directories from the /.spago folder and try `pnpm spago build` to reinstall them.
+- [Halogen](https://purescript-halogen.github.io/purescript-halogen/) is by far the most used front-end framework for PureScript.
+  - *Not* using [The Elm Architecture](https://guide.elm-lang.org/architecture/) ("**TEA**"). You can create components with it if you’re into that stuff.
+  - [A bit slower](https://github.com/purescript-halogen/purescript-halogen/issues/632#issuecomment-609952547) than Elm.
+  - About twice heavier than Elm with brotli compression for a real world app.
 
-### Vite setup
 
-When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/items/nwolverson.ide-purescript) the project is built every time you save a file. There is no need for a special Vite plugin. Just import `output/Main/index.js` in your Vite `main.js` file.
+- [Elmish](https://collegevine.github.io/purescript-elmish/), as its name suggests, uses Elm ideas:
+  - (loosely) follows TEA principles, implemented as a thin layer on top of React.
+  - Bloated with React 17 (I couldn’t figure out how to get it to work with [Preact](https://preactjs.com/)).
+  - Seems abandoned as the package maintainer [no longer has the motivation to update it to React 18 and above](https://github.com/collegevine/purescript-elmish/pull/66#issuecomment-1810431289).
+
+- [Flame](https://flame.asafe.dev/) is a relatively new framework inspired by Elm:
+
+  - The [Flame architecture](https://flame.asafe.dev/events) is inspired by TEA.
+  - Performance is [comparable to Elm](https://flame.asafe.dev/benchmarks).
+  - Server Side Rendering is [supported](https://flame.asafe.dev/rendering).
+  - Does not have a router. You will have to use [purescript-routing](https://github.com/purescript-contrib/purescript-routing) or [purescript-routing-duplex](https://github.com/natefaubion/purescript-routing-duplex).
+
+### Flame example
+
+This repo contains a minimal Flame example with a counter increment/decrement buttons, random number generation, synchronous and asynchronous FFI calls, subscription and decoding of a JSON object.
+
+Note: If GitHub errors like "Empty reply from server" happen during `pnpm spago install flame`, remove the erroneous packages directories from the /.spago folder and try `pnpm spago build` to reinstall them.
+
+#### Vite setup
+
+- When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/items/nwolverson.ide-purescript) the project is built every time you save a file. There is no need for a special Vite plugin. `output/Main/index.js` is simply imported in the JavasScript entry file.
+- [Terser](https://terser.org/) is used for better compression results.
