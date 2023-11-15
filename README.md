@@ -1244,3 +1244,11 @@ We only covered the basics of PureScript here. If you want to learn more, check 
 - [Functional Programming Made Easier](https://leanpub.com/fp-made-easier) by Charles Scalfani is a great book to learn PureScript.
 - [PureScript Discourse](https://discourse.purescript.org/) forum
 - [PureScript Discord](https://purescript.org/chat) chat
+
+## License
+
+[MIT](https://github.com/laurentpayot/purescript-for-elm-developers/blob/main/LICENSE)
+
+## Stargazers :heart:
+
+[![Stargazers repo roster for @laurentpayot/purescript-for-elm-developers](https://reporoster.com/stars/laurentpayot/purescript-for-elm-developers)](https://github.com/laurentpayot/purescript-for-elm-developers/stargazers)
