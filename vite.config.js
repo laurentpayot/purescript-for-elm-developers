@@ -31,10 +31,10 @@ export default defineConfig({
                 unsafe_undefined: true,
                 passes: 3,
             },
-            // mangle: {
-            //     properties: 'keep_quoted', // effective but dangerous?
-            // },
-            mangle: true
+            // mangle: true
+            mangle: {
+                properties: 'keep_quoted', // effective but dangerous?
+            },
         },
     },
     plugins: []
