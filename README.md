@@ -1222,9 +1222,13 @@ In [The state of PureScript 2023 survey results](https://github.com/purescript/s
 
 This repo contains a minimal Flame example with a counter increment/decrement buttons, random number generation, synchronous and asynchronous FFI calls, subscription and decoding of a JSON object.
 
-Note: If GitHub errors like "Empty reply from server" happen during `pnpm spago install flame`, remove the erroneous packages directories from the /.spago folder and try `pnpm spago build` to reinstall them.
+#### Installation
 
-#### Vite setup
+```bash
+npm i
+```
+
+#### Vite setup notes
 
 - When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/items/nwolverson.ide-purescript) the project is built every time you save a file. There is no need for a special Vite plugin. `output/Main/index.js` is simply imported in the JavasScript entry file.
 - [Terser](https://terser.org/) is used for better compression results.
