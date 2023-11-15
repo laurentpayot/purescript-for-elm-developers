@@ -1229,3 +1229,15 @@ Note: If GitHub errors like "Empty reply from server" happen during `pnpm spago 
 
 - When using [PureScript IDE for VS code](https://marketplace.visualstudio.com/items/nwolverson.ide-purescript) the project is built every time you save a file. There is no need for a special Vite plugin. `output/Main/index.js` is simply imported in the JavasScript entry file.
 - [Terser](https://terser.org/) is used for better compression results.
+
+
+## Go further
+
+We only covered the basics of PureScript here. If you want to learn more, check out the following resources:
+
+- [Official documentation](https://github.com/purescript/documentation) of course.
+- [PureScript: Jordan's Reference](https://jordanmartinez.github.io/purescript-jordans-reference-site/) is a must.
+- [PureScript By Example](https://book.purescript.org/) is a free online book containing several practical projects for PureScript beginners.
+- [Functional Programming Made Easier](https://leanpub.com/fp-made-easier) by Charles Scalfani is a great book to learn PureScript.
+- [PureScript Discourse](https://discourse.purescript.org/) forum
+- [PureScript Discord](https://purescript.org/chat) chat
