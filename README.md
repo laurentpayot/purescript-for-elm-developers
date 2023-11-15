@@ -1203,9 +1203,9 @@ In [The state of PureScript 2023 survey results](https://github.com/purescript/s
 <img src="ps-frameworks-2023.png" alt="PureScript frameworks usage chart for 2023" width="600">
 
 - [**Halogen**](https://purescript-halogen.github.io/purescript-halogen/) is by far the most used front-end framework for PureScript.
-  - *Not* using [The Elm Architecture](https://guide.elm-lang.org/architecture/) ("TEA"). You can create components with it if you’re into that stuff.
+  - *Not* using [The Elm Architecture](https://guide.elm-lang.org/architecture/) ("TEA").
+  - You can create components if you’re into that stuff. There is [purescript-halogen-store](https://github.com/thomashoneyman/purescript-halogen-store) for global state management.
   - Does not have a router. You will have to use [purescript-routing](https://github.com/purescript-contrib/purescript-routing) or [purescript-routing-duplex](https://github.com/natefaubion/purescript-routing-duplex).
-  - You can use [purescript-halogen-store](https://github.com/thomashoneyman/purescript-halogen-store) for global state management.
   - [A bit slower](https://github.com/purescript-halogen/purescript-halogen/issues/632#issuecomment-609952547) than Elm.
   - About twice heavier than Elm with brotli compression for a real world app.
 
