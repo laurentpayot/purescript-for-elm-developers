@@ -81,6 +81,8 @@ foo = 1 + ?what_could_this_be
 
 ## Arrays
 
+In PureScript, arrays are the most common data structure for sequences of items. They are constructed with square brackets.
+
 ```purs
 myArray = [2,4,3]
 
