@@ -1,12 +1,15 @@
 {
-  "name": "purescript-app-example",
+  "name": "purescript-for-elm-developers",
   "version": "0.1.0",
-  "description": "PureScript example app Flame",
+  "description": "PureScript for Elm developers",
   "keywords": [
     "PureScript",
+    "Elm",
+    "crash course",
+    "example",
+    "Flame",
     "counter",
-    "app",
-    "Flame"
+    "app"
   ],
   "author": "Laurent Payot",
   "license": "MIT",
