@@ -1,6 +1,6 @@
 # PureScript for Elm developers 🤯
 
-This README file is a crash course on PureScript targeted for Elm developers. It is
+This README file is a crash course on PureScript targeted at Elm developers. It is
 based on information picked from:
 - https://github.com/alpacaaa/elm-to-purescript-cheatsheet
 - https://github.com/purescript/documentation
@@ -11,9 +11,7 @@ based on information picked from:
 - https://www.tobyhobson.com/posts/cats/
 - https://github.com/alpacaaa/zero-bs-haskell
 
-Sometimes I did a shameless copy-paste instead of a badly paraphrasing. I think it’s fair use but please let me know if I’m infringing copyright in any way.
-
-Feel free to open an issue if you find any mistakes.
+Sometimes I did a shameless copy-paste instead of writing a bad paraphrase. I think it’s fair use but please let me know if I’m infringing copyright in any way. Feel free to open an issue if you find any mistakes.
 
 Happy monad lifting! 🏋
 
