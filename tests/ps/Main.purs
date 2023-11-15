@@ -1,3 +1,5 @@
+-- tests for the README examples
+
 module Test.Main (main) where
 
 import Prelude
@@ -13,7 +15,6 @@ import Effect.Console (logShow, log)
 import Effect.Random (random)
 import Effect.Timer (setTimeout, clearTimeout)
 import Test.Assert (assert)
-
 
 newtype Score = Score Int
 
@@ -101,7 +102,6 @@ myGCD n m
   | m == 0 = n
   | n > m = myGCD (n - m) m
   | otherwise = myGCD (m - n) n
-
 
 main :: Effect Unit
 main = do
