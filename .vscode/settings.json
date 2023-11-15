@@ -1,5 +1,14 @@
 {
+    "purescript.addNpmPath": true,
+    "vite.port": 5000,
+    "browse-lite.startUrl": "localhost:5000",
+    "cSpell.enableFiletypes": [
+        "purescript",
+        "dhall"
+    ],
     "cSpell.words": [
-        "Elmish"
-    ]
+        "Dhall",
+        "forall",
+        "Semigroup"
+    ],
 }
