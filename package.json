@@ -15,8 +15,7 @@
     "test": "spago test",
     "start": "spago build && vite",
     "build": "spago build && vite build",
-    "serve": "cd dist && python3 -m http.server 5000",
-    "do-update": "pnpm update --recursive --latest"
+    "serve": "cd dist && python3 -m http.server 5000"
   },
   "devDependencies": {
     "purescript": "^0.15.12",
