@@ -122,7 +122,7 @@ takeFive _ = 0
 
 For performance reasons, PureScript does *not* provide a direct way of destructuring arrays of an *unspecified* length. If you need a data structure which supports this sort of matching, the recommended approach is to use lists.
 
-Another way is to use [`uncons`](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array#v:uncons) or [`unsnoc`](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array#v:unsnoc) to break an array into its first or last element and remaining elements:
+Another way is to use `uncons` or `unsnoc` to break an array into its first or last element and remaining elements:
 
 ```purs
 import Data.Array (uncons, unsnoc)
