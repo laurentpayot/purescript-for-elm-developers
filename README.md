@@ -106,7 +106,21 @@ take 3 [1,2,3,4,5] -- [1,2,3]
 append [1,2,3] [4,5,6] -- [1,2,3,4,5,6]
 ```
 
-For performance reasons, PureScript does *not* provide any means of destructuring arrays. If you need a data structure which supports this sort of matching, the recommended approach is to use lists.
+### Destructuring
+
+For performance reasons, PureScript does *not* provide any means of destructuring arrays of an *unspecified* length. If you need a data structure which supports this sort of matching, the recommended approach is to use lists.
+
+But you can use pattern matching for arrays of a *fixed* length:
+
+```purs
+isEmpty :: forall a. Array a -> Boolean
+isEmpty [] = true
+isEmpty _ = false
+
+takeFive :: Array Int -> Int
+takeFive [0, 1, a, b, _] = a * b
+takeFive _ = 0
+```
 
 ## Lists
 
