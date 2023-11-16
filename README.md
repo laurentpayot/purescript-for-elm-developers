@@ -108,9 +108,7 @@ append [1,2,3] [4,5,6] -- [1,2,3,4,5,6]
 
 ### Destructuring
 
-For performance reasons, PureScript does *not* provide any means of destructuring arrays of an *unspecified* length. If you need a data structure which supports this sort of matching, the recommended approach is to use lists.
-
-But you can use pattern matching for arrays of a *fixed* length:
+You can use pattern matching for arrays of a *fixed* length:
 
 ```purs
 isEmpty :: forall a. Array a -> Boolean
@@ -121,6 +119,26 @@ takeFive :: Array Int -> Int
 takeFive [0, 1, a, b, _] = a * b
 takeFive _ = 0
 ```
+
+For performance reasons, PureScript does *not* provide a direct way of destructuring arrays of an *unspecified* length. If you need a data structure which supports this sort of matching, the recommended approach is to use lists.
+
+Another way is to use [`uncons`](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array#v:uncons) or [`unsnoc`](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array#v:unsnoc) to break an array into its first or last element and remaining elements:
+
+```purs
+import Data.Array (uncons, unsnoc)
+
+uncons [1, 2, 3] -- Just {head: 1, tail: [2, 3]}
+uncons [] -- Nothing
+
+unsnoc [1, 2, 3] -- Just {init: [1, 2], last: 3}
+unsnoc [] -- Nothing
+
+case uncons myArray of
+  Just { head: x, tail: xs } -> somethingWith_x_Or_xs
+  Nothing -> somethingElse
+```
+
+Beware `unsnoc` is O(n) where n is the length of the array.
 
 ## Lists
 
