@@ -180,7 +180,7 @@ arrayHead :: NonEmpty Array a -> a
 arrayHead (x :| _) = x
 ```
 
-Instead the generic `Data.NonEmpty`, use specific modules when possible:
+Instead the generic `Data.NonEmpty` module, use specific modules when possible:
 - [Data.Array.NonEmpty](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array.NonEmpty) to create `NonEmptyArray`
 - [Data.List.NonEmpty](https://pursuit.purescript.org/packages/purescript-lists/docs/Data.List.NonEmpty) to create `NonEmptyList`
 
