@@ -106,13 +106,7 @@ take 3 [1,2,3,4,5] -- [1,2,3]
 append [1,2,3] [4,5,6] -- [1,2,3,4,5,6]
 ```
 
-### Destructuring
-
-```purs
-case xs of
-  [] -> ... -- empty array
-  x : rest -> ... -- head and tail
-```
+For performance reasons, PureScript does *not* provide any means of destructuring arrays. If you need a data structure which supports this sort of matching, the recommended approach is to use lists.
 
 ## Lists
 
