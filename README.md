@@ -134,7 +134,7 @@ unsnoc [1, 2, 3] -- Just {init: [1, 2], last: 3}
 unsnoc [] -- Nothing
 
 case uncons myArray of
-  Just { head, tail } -> somethingWithHeadAndTail
+  Just { head: x, tail: xs } -> somethingWithXandXs
   Nothing -> somethingElse
 ```
 
