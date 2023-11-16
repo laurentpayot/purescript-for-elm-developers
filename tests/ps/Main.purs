@@ -4,6 +4,8 @@ module Test.Main (main) where
 
 import Prelude
 
+import Data.Array.NonEmpty (uncons)
+import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
@@ -15,6 +17,9 @@ import Effect.Console (logShow, log)
 import Effect.Random (random)
 import Effect.Timer (setTimeout, clearTimeout)
 import Test.Assert (assert)
+
+neaHead :: NonEmptyArray Int -> Int
+neaHead nonEmptyArray = _.head $ uncons nonEmptyArray
 
 newtype Score = Score Int
 
@@ -105,6 +110,8 @@ myGCD n m
 
 main :: Effect Unit
 main = do
+
+  assert $ neaHead (NonEmptyArray [ 1, 2, 3 ]) == 1
 
   assert $ (Score 4) + (Score 6) == (Score 10)
 

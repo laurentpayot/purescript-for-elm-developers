@@ -142,15 +142,20 @@ Beware `unsnoc` is O(n) where n is the length of the array.
 
 ## Lists
 
-**Be careful!** `[1,2,3]` is syntactic sugar for `List Int` in Elm but `Array Int` in Purescript.
+**Be careful!**  The literal `[1,2,3]` has a type of `List Int` in Elm but `Array Int` in Purescript.
 
-In PureScript, the quickest way to create a list is from a Foldable structure (an Array in this case):
+PureScript lists are [linked lists](https://en.wikipedia.org/wiki/Linked_list). You can create them using the `Cons` infix alias `:` and `Nil` when there is no link to the next element (end of the list).
+
+```purs
+myList = 1 : 2 : 3 : Nil
+
+myNewList = 1 : myList
+```
+
+Another way to create a list is from a Foldable structure (an Array in this case):
 
 ```purs
 myList = List.fromFoldable [2,4,3]
-
--- Cons (prepend)
-myNewList = 1 : myList
 ```
 
 ### Destructuring
@@ -163,15 +168,23 @@ case xs of
 
 ## Non empty arrays/lists
 
-The they are `NonEmpty` modules for [Array](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array.NonEmpty) and [List](https://pursuit.purescript.org/packages/purescript-lists/docs/Data.List.NonEmpty). They are quite useful to flatten cases as described in the famous ["Parse, don’t validate"](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/) blog post.
+There is a [Data.NotEmpty](https://pursuit.purescript.org/packages/purescript-nonempty/7.0.0/docs/Data.NonEmpty) module that defines a generic `NonEmpty` data structure. `:|` is the infix alias for its constructor.
+
+This quite useful to flatten cases as described in the famous ["Parse, don’t validate"](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/) blog post:
 
 ```purs
-data NonEmpty a = a :| [a]
+import Data.NonEmpty (NonEmpty, (:|))
 
 -- no Maybe when getting the head
-getHead :: NonEmpty a -> a
-getHead (x:|_) = x
+arrayHead :: NonEmpty Array a -> a
+arrayHead (x :| _) = x
 ```
+
+Instead the generic `Data.NonEmpty`, use specific modules when possible:
+- [Data.Array.NonEmpty](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array.NonEmpty) to create `NonEmptyArray`
+- [Data.List.NonEmpty](https://pursuit.purescript.org/packages/purescript-lists/docs/Data.List.NonEmpty) to create `NonEmptyList`
+
+For convenience, [Data.Array.NonEmpty.Internal](https://pursuit.purescript.org/packages/purescript-arrays/7.3.0/docs/Data.Array.NonEmpty.Internal#t:NonEmptyArray) provides the internal constructor  [`NonEmptyArray`](https://pursuit.purescript.org/packages/purescript-arrays/docs/Data.Array.NonEmpty.Internal#t:NonEmptyArray). Beware you can create a `NonEmptyArray` that is actually empty with it so use this at your own risk when you know what you are doing.
 
 ## Tuples
 
