@@ -585,12 +585,17 @@ derive instance Ord MyADT
 nub [Some, Arbitrary 1, Some, Some] == [Some, Arbitrary 1]
 ```
 
-Currently, instances for the following classes can be derived by the compiler:
+Currently (in PureScript version 0.15.12), instances for the following classes can be derived by the compiler:
 - Data.Generic.Rep (class Generic) [see below](#deriving-from-generic)
+- [Data.Newtype (class Newtype)](https://pursuit.purescript.org/packages/purescript-newtype/docs/Data.Newtype#t:Newtype)
 - [Data.Eq (class Eq)](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Eq#t:Eq)
 - [Data.Ord (class Ord)](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Ord#t:Ord)
 - [Data.Functor (class Functor)](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Functor#t:Functor)
-- [Data.Newtype (class Newtype)](https://pursuit.purescript.org/packages/purescript-newtype/docs/Data.Newtype#t:Newtype)
+- [Data.Functor.Contravariant (class Contravariant)](https://pursuit.purescript.org/packages/purescript-contravariant/docs/Data.Functor.Contravariant#t:Contravariant)
+- [Data.Bifunctor (class Bifunctor)](https://pursuit.purescript.org/packages/purescript-bifunctors/docs/Data.Bifunctor#t:Bifunctor)
+- [Data.Bifoldable (class Bifoldable)](https://pursuit.purescript.org/packages/purescript-foldable-traversable/docs/Data.Bifoldable#t:Bifoldable)
+- [Data.Bitraversable (class Bitraversable)](https://pursuit.purescript.org/packages/purescript-foldable-traversable/docs/Data.Bitraversable#t:Bitraversable)
+- [Data.Profunctor (class Profunctor)](https://pursuit.purescript.org/packages/purescript-profunctor/docs/Data.Profunctor#t:Profunctor)
 
 ### Derive from `newtype`
 
