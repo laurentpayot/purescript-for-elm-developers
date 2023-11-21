@@ -234,9 +234,11 @@ getY coords = get2 coords
 ### Destructuring
 
 ```purs
+distance2D :: Tuple Int Int -> Int
 distance2D (Tuple x y) =
   x * x + y * y
 
+distance3D :: Int /\ Int /\ Int -> Int
 distance3D (x /\ y /\ z) =
   x * x + y * y + z * z
 ```

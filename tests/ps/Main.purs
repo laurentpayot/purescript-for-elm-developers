@@ -35,9 +35,11 @@ coords3D = 10 /\ 20 /\ 30
 getY' :: Int /\ Int /\ Int -> Int
 getY' coords = get2 coords
 
+distance2D :: Tuple Int Int -> Int
 distance2D (Tuple x y) =
   x * x + y * y
 
+distance3D :: Int /\ Int /\ Int -> Int
 distance3D (x /\ y /\ z) =
   x * x + y * y + z * z
 
