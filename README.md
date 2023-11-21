@@ -22,6 +22,8 @@ Laurent
 
 ## Common packages
 
+[Pursuit](https://pursuit.purescript.org/) is the home of PureScript packages documentation. It lets you search by package, module, and function names, as well as approximate type signatures.
+
 | **Elm**                                  | **Purescript**                           | **Notes**                                |
 | ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
 | [String](http://package.elm-lang.org/packages/elm-lang/core/latest/String) | [Data.String](https://pursuit.purescript.org/packages/purescript-strings/docs/Data.String) |                                          |
