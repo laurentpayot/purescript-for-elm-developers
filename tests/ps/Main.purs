@@ -9,6 +9,8 @@ import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
+import Data.Tuple (Tuple(..), fst, snd)
+import Data.Tuple.Nested (type (/\), (/\), get2)
 import Data.Validation.Semigroup (V, invalid, isValid)
 import Effect (Effect)
 import Effect.Aff (Milliseconds(..), delay, forkAff, joinFiber, launchAff_, suspendAff)
@@ -17,6 +19,27 @@ import Effect.Console (logShow, log)
 import Effect.Random (random)
 import Effect.Timer (setTimeout, clearTimeout)
 import Test.Assert (assert)
+
+coords2D :: Tuple Int Int
+coords2D = Tuple 10 20
+
+getX :: Tuple Int Int -> Int
+getX coords = fst coords
+
+getY :: Tuple Int Int -> Int
+getY coords = snd coords
+
+coords3D :: Int /\ Int /\ Int
+coords3D = 10 /\ 20 /\ 30
+
+getY' :: Int /\ Int /\ Int -> Int
+getY' coords = get2 coords
+
+distance2D (Tuple x2 y2) =
+  x2 * x2 + y2 * y2
+
+distance3D (x3 /\ y3 /\ z3) =
+  x3 * x3 + y3 * y3 + z3 * z3
 
 neaHead :: NonEmptyArray Int -> Int
 neaHead nonEmptyArray = _.head $ uncons nonEmptyArray
@@ -110,6 +133,12 @@ myGCD n m
 
 main :: Effect Unit
 main = do
+
+  assert $ getX coords2D == 10
+  assert $ getY coords2D == 20
+  assert $ getY' coords3D == 20
+  assert $ distance2D coords2D == 500
+  assert $ distance3D coords3D == 1400
 
   assert $ neaHead (NonEmptyArray [ 1, 2, 3 ]) == 1
 
