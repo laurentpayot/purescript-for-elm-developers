@@ -190,18 +190,48 @@ For convenience, [Data.Array.NonEmpty.Internal](https://pursuit.purescript.org/p
 
 ## Tuples
 
-Just a data type in Purescript. Use records when possible.
+Tuples are just a data type in Purescript. Use records when possible.
 
 ```purs
-import Data.Tuple
+import Data.Tuple (Tuple, fst, snd)
 
-coords = Tuple 10 20
+coords2D = Tuple 10 20
+
+getX :: Tuple Int Int -> Int
+getX = fst coords2D
+
+getY :: Tuple Int Int -> Int
+getY = snd coords2D
+```
+
+You can use tuples that are not restricted to two elements with [Data.Tuple.Nested](https://pursuit.purescript.org/packages/purescript-tuples/docs/Data.Tuple.Nested). All nested tuple functions are numbered from 1 to 10:
+
+```purs
+import Data.Tuple.Nested (Tuple3, tuple3, get2)
+
+coords3D :: Tuple3 Int Int Int
+coords3D = tuple3 10 20 30
+
+getY :: Tuple3 Int Int Int -> Int
+getY = get2 coords3D
+```
+
+`/\` is the infix alias for `Tuple` that allows nested tuples of arbitrary length (depth). The same alias exists for types. The previous example could be rewritten as:
+
+```purs
+import Data.Tuple.Nested (type (/\), (/\), get2)
+
+coords3D :: Int /\ Int /\ Int
+coords3D = 10 /\ 20 /\ 30
+
+getY :: Int /\ Int /\ Int -> Int
+getY = get2 coords3D
 ```
 
 ### Destructuring
 
 ```purs
-Tuple x y = coords
+Tuple x y = coords2D
 ```
 
 ## Records
