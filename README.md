@@ -86,6 +86,8 @@ foo = 1 + ?what_could_this_be
 In PureScript, arrays are the most common data structure for sequences of items. They are constructed with square brackets.
 
 ```purs
+import Data.Array ()
+
 myArray = [2,4,3]
 
 -- Cons (prepend)
@@ -193,15 +195,16 @@ For convenience, [Data.Array.NonEmpty.Internal](https://pursuit.purescript.org/p
 Tuples are just a data type in Purescript. Use records when possible.
 
 ```purs
-import Data.Tuple (Tuple, fst, snd)
+import Data.Tuple (Tuple(..), fst, snd)
 
+coords2D :: Tuple Int Int
 coords2D = Tuple 10 20
 
 getX :: Tuple Int Int -> Int
-getX = fst coords2D
+getX coords = fst coords
 
 getY :: Tuple Int Int -> Int
-getY = snd coords2D
+getY coords = snd coords
 ```
 
 You can use tuples that are not restricted to two elements with [Data.Tuple.Nested](https://pursuit.purescript.org/packages/purescript-tuples/docs/Data.Tuple.Nested). All nested tuple functions are numbered from 1 to 10:
@@ -213,7 +216,7 @@ coords3D :: Tuple3 Int Int Int
 coords3D = tuple3 10 20 30
 
 getY :: Tuple3 Int Int Int -> Int
-getY = get2 coords3D
+getY coords = get2 coords
 ```
 
 `/\` is the infix alias for `Tuple` that allows nested tuples of arbitrary length (depth). The same alias exists for types. The previous example could be rewritten as:
@@ -225,13 +228,17 @@ coords3D :: Int /\ Int /\ Int
 coords3D = 10 /\ 20 /\ 30
 
 getY :: Int /\ Int /\ Int -> Int
-getY = get2 coords3D
+getY coords = get2 coords
 ```
 
 ### Destructuring
 
 ```purs
-Tuple x y = coords2D
+distance2D (Tuple x y) =
+  x * x + y * y
+
+distance3D (x /\ y /\ z) =
+  x * x + y * y + z * z
 ```
 
 ## Records
