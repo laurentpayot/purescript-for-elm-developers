@@ -3,12 +3,12 @@ module Main where
 import Prelude
 
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
-import Data.Tuple (Tuple, fst, snd)
+import Data.Tuple (fst, snd)
+import Data.Tuple.Nested (type (/\), (/\))
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Random (randomInt)
-import Data.Tuple.Nested ((/\))
 
 import Flame (Html, QuerySelector(..), Subscription)
 import Flame as App
@@ -43,7 +43,7 @@ type TimeRecord =
 -- recreating Elm type alias `Cmd`
 type Cmd msg = Aff (Maybe msg)
 
-init :: Tuple Model (Array (Cmd Msg))
+init :: Model /\ (Array (Cmd Msg))
 init =
   { count: 0
   , time: "Waiting for time…"
@@ -60,7 +60,7 @@ data Msg
   | GetCat
   | GotCat String
 
-update ∷ Model -> Msg -> Tuple Model (Array (Cmd Msg))
+update ∷ Model -> Msg -> Model /\ (Array (Cmd Msg))
 update model@{ count } = case _ of
   Increment -> model { count = count + 1 } /\ []
   Decrement -> model { count = count - 1 } /\ []
