@@ -8,7 +8,9 @@ import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Random (randomInt)
-import Flame (Html, QuerySelector(..), Subscription, (:>))
+import Data.Tuple.Nested ((/\))
+
+import Flame (Html, QuerySelector(..), Subscription)
 import Flame as App
 import Flame.Html.Attribute (id, onClick, src, height)
 import Flame.Html.Element (main, h1_, text, button, p_, img)
@@ -46,7 +48,7 @@ init =
   { count: 0
   , time: "Waiting for time…"
   , cat: Nothing
-  } :> []
+  } /\ []
 
 data Msg
   = Increment
@@ -60,14 +62,14 @@ data Msg
 
 update ∷ Model -> Msg -> Tuple Model (Array (Cmd Msg))
 update model@{ count } = case _ of
-  Increment -> model { count = count + 1 } :> []
-  Decrement -> model { count = count - 1 } :> []
-  Randomize -> model :> [ Just <<< GotRandom <$> liftEffect (randomInt 1 100) ]
-  GotRandom int -> model { count = int } :> []
-  GotTimeRecord { time } -> model { time = time } :> []
-  DoubleCount -> model { count = multiply count 2 } :> []
-  GetCat -> model :> [ Just <<< GotCat <$> catBase64 (show count) 100 ]
-  GotCat base64 -> model { cat = Just base64 } :> []
+  Increment -> model { count = count + 1 } /\ []
+  Decrement -> model { count = count - 1 } /\ []
+  Randomize -> model /\ [ Just <<< GotRandom <$> liftEffect (randomInt 1 100) ]
+  GotRandom int -> model { count = int } /\ []
+  GotTimeRecord { time } -> model { time = time } /\ []
+  DoubleCount -> model { count = multiply count 2 } /\ []
+  GetCat -> model /\ [ Just <<< GotCat <$> catBase64 (show count) 100 ]
+  GotCat base64 -> model { cat = Just base64 } /\ []
 
 subscribe ∷ Array (Subscription Msg)
 subscribe =
@@ -96,7 +98,7 @@ view { count, time, cat } =
 start ∷ Flags -> Effect Unit
 start { initialCount } = do
   App.mount_ (QuerySelector "body")
-    { init: (fst init) { count = initialCount } :> (snd init)
+    { init: (fst init) { count = initialCount } /\ (snd init)
     , subscribe
     , update
     , view
