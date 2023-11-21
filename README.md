@@ -211,6 +211,8 @@ getY :: Tuple Int Int -> Int
 getY coords = snd coords
 ```
 
+### Nested tuples
+
 You can use tuples that are not restricted to two elements with [Data.Tuple.Nested](https://pursuit.purescript.org/packages/purescript-tuples/docs/Data.Tuple.Nested). All nested tuple functions are numbered from 1 to 10:
 
 ```purs
