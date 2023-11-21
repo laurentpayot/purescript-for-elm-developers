@@ -170,6 +170,10 @@ case xs of
   x : rest -> ... -- head and tail
 ```
 
+## Foldables
+
+[Data.Foldable](https://pursuit.purescript.org/packages/purescript-foldable-traversable/docs/Data.Foldable) contains common functions (`sum`, `product`, `minimum`, `maximum` etc.) for data structures which can be folded, such as `Array` and `List`.
+
 ## Non empty arrays/lists
 
 There is a [Data.NotEmpty](https://pursuit.purescript.org/packages/purescript-nonempty/7.0.0/docs/Data.NonEmpty) module that defines a generic `NonEmpty` data structure. `:|` is the infix alias for its constructor.
