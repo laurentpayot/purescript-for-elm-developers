@@ -345,7 +345,7 @@ foo arg1 arg2 =
 
 ## Guards
 
-Guards consist of lines starting with `|` followed by a predicate. They can be used in functions:
+Guards consist of lines starting with `|` followed by a predicate. They can be used to make function definitions more readable:
 
 ```purs
 greater x y
