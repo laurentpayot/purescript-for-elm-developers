@@ -345,7 +345,7 @@ foo arg1 arg2 =
 
 ## Guards
 
-When using patterns to define a function at the top level, guards appear after all patterns:
+Guards consist of lines starting with `|` followed by a predicate. They can be used in functions:
 
 ```purs
 greater x y
