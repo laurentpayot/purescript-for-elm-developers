@@ -56,7 +56,7 @@ data Msg
   | Randomize
   | GotRandom Int
   | GotTimeRecord TimeRecord
-  | DoubleCount
+  | Double
   | GetCat
   | GotCat String
 
@@ -67,7 +67,7 @@ update model@{ count } = case _ of
   Randomize -> model /\ [ Just <<< GotRandom <$> liftEffect (randomInt 1 100) ]
   GotRandom int -> model { count = int } /\ []
   GotTimeRecord { time } -> model { time = time } /\ []
-  DoubleCount -> model { count = multiply count 2 } /\ []
+  Double -> model { count = multiply count 2 } /\ []
   GetCat -> model /\ [ Just <<< GotCat <$> catBase64 (show count) 100 ]
   GotCat base64 -> model { cat = Just base64 } /\ []
 
@@ -85,8 +85,8 @@ view { count, time, cat } =
     , text (show count)
     , button [ onClick Increment ] "+"
     , p_
-        [ button [ onClick DoubleCount ] "Double"
-        , button [ onClick Randomize ] "Random"
+        [ button [ onClick Double ] "Double"
+        , button [ onClick Randomize ] "Randomize"
         ]
     , p_ [ button [ onClick GetCat ] "Cat" ]
     , if isJust cat then
