@@ -9,10 +9,9 @@ import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Random (randomInt)
-
 import Flame (Html, QuerySelector(..), Subscription)
 import Flame as App
-import Flame.Html.Attribute (id, onClick, src, height)
+import Flame.Html.Attribute (height, id, onClick, src, width)
 import Flame.Html.Element (main, h1_, text, button, p_, img)
 import Flame.Subscription (onCustomEvent)
 import Promise.Aff (Promise, toAffE)
@@ -68,7 +67,7 @@ update model@{ count } = case _ of
   GotRandom int -> model { count = int } /\ []
   GotTimeRecord { time } -> model { time = time } /\ []
   Double -> model { count = multiply count 2 } /\ []
-  GetCat -> model /\ [ Just <<< GotCat <$> catBase64 (show count) 100 ]
+  GetCat -> model /\ [ Just <<< GotCat <$> catBase64 (show count) 50 ]
   GotCat base64 -> model { cat = Just base64 } /\ []
 
 subscribe ∷ Array (Subscription Msg)
@@ -90,7 +89,13 @@ view { count, time, cat } =
         ]
     , p_ [ button [ onClick GetCat ] "Cat" ]
     , if isJust cat then
-        p_ [ img [ src ("data:image/png;base64," <> fromMaybe "" cat), height "200px" ] ]
+        p_
+          [ img
+              [ src ("data:image/png;base64," <> fromMaybe "" cat)
+              , height "200px"
+              , width "200px"
+              ]
+          ]
       else
         p_ "No cat yet"
     ]
