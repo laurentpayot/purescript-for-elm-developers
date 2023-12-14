@@ -22,9 +22,9 @@
   },
   "devDependencies": {
     "purescript": "^0.15.13",
-    "purs-tidy": "^0.10.0",
+    "purs-tidy": "^0.10.1",
     "spago": "^0.21.0",
-    "terser": "^5.24.0",
-    "vite": "^4.5.0"
+    "terser": "^5.26.0",
+    "vite": "^4.5.1"
   }
 }

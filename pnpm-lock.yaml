@@ -9,17 +9,17 @@ devDependencies:
     specifier: ^0.15.13
     version: 0.15.13
   purs-tidy:
-    specifier: ^0.10.0
-    version: 0.10.0
+    specifier: ^0.10.1
+    version: 0.10.1
   spago:
     specifier: ^0.21.0
     version: 0.21.0
   terser:
-    specifier: ^5.24.0
-    version: 5.24.0
+    specifier: ^5.26.0
+    version: 5.26.0
   vite:
-    specifier: ^4.5.0
-    version: 4.5.0(terser@5.24.0)
+    specifier: ^4.5.1
+    version: 4.5.1(terser@5.26.0)
 
 packages:
 
@@ -683,6 +683,7 @@ packages:
 
   /figgy-pudding@3.5.2:
     resolution: {integrity: sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==}
+    deprecated: This module is no longer supported.
     dev: true
 
   /filesize@4.2.1:
@@ -1223,8 +1224,8 @@ packages:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: true
 
-  /postcss@8.4.31:
-    resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
+  /postcss@8.4.32:
+    resolution: {integrity: sha512-D/kj5JNu6oo2EIy+XL/26JEDTlIbB8hw85G8StOE6L74RQAVVP5rej6wxCNqyMbR4RkPfqvezVbPw81Ngd6Kcw==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.7
@@ -1316,8 +1317,8 @@ packages:
       - supports-color
     dev: true
 
-  /purs-tidy@0.10.0:
-    resolution: {integrity: sha512-ULbJfBHRngczYwcOzugytRiNy+Guy2VXoAG1jMtGaSFEaUZk1lZkKU11t8jIZTrDdOrkgqlWCZLi3mfcHvdimA==}
+  /purs-tidy@0.10.1:
+    resolution: {integrity: sha512-i1QvMaDEaZXv/GWZNFWs5CISiBOkwPhG4D1S4Rw6zUCGaE+NQNWTjvwY21rifynGa2N2TiBJRC61LkORbmGxrA==}
     hasBin: true
     dev: true
 
@@ -1567,8 +1568,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /terser@5.24.0:
-    resolution: {integrity: sha512-ZpGR4Hy3+wBEzVEnHvstMvqpD/nABNelQn/z2r0fjVWGQsN3bpOLzQlqDxmb4CDZnXq5lpjnQ+mHQLAOpfM5iw==}
+  /terser@5.26.0:
+    resolution: {integrity: sha512-dytTGoE2oHgbNV9nTzgBEPaqAWvcJNl66VZ0BkJqlvp71IjO8CxdBx/ykCNb47cLnCmCvRZ6ZR0tLkqvZCdVBQ==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
@@ -1638,8 +1639,8 @@ packages:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
-  /vite@4.5.0(terser@5.24.0):
-    resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}
+  /vite@4.5.1(terser@5.26.0):
+    resolution: {integrity: sha512-AXXFaAJ8yebyqzoNB9fu2pHoo/nWX+xZlaRwoeYUxEqBO+Zj4msE5G+BhGBll9lYEKv9Hfks52PAF2X7qDYXQA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -1667,9 +1668,9 @@ packages:
         optional: true
     dependencies:
       esbuild: 0.18.20
-      postcss: 8.4.31
+      postcss: 8.4.32
       rollup: 3.29.4
-      terser: 5.24.0
+      terser: 5.26.0
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
