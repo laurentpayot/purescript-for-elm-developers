@@ -467,6 +467,8 @@ myPassword = toPassword "123456"
 
 ## Modules
 
+Here is a full example shamelessly ripped off from the unmissable [*PureScript: Jordan's Reference*](https://jordanmartinez.github.io/purescript-jordans-reference-site/content/11-Syntax/04-Module-Syntax/src/11-Full-Module-Syntax-ps.html):
+
 ```purs
 module Syntax.Module.FullExample
   -- exports go here by just writing the name
