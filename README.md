@@ -790,7 +790,7 @@ map (\n -> n + 1) (Just 5)
 
 To *lift* a function means to turn it into a function that works with functor-wrapped arguments. Applicative functors are functors that allow lifting of functions.
 
-`<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/docs/Control.Apply) type class (that extends [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Functor)). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm.
+`<*>` is the infix alias of the `apply` operator defined in the [Apply](https://pursuit.purescript.org/packages/purescript-prelude/docs/Control.Apply) type class (that extends [`Functor`](https://pursuit.purescript.org/packages/purescript-prelude/docs/Data.Functor)). `<*>` is equivalent to [`|> andMap`](https://thoughtbot.com/blog/running-out-of-maps#one-liner-to-rule-them-all) in Elm (with `andMap = Maybe.map2 (|>)`).
 
 The [Applicative](https://pursuit.purescript.org/packages/purescript-prelude/docs/Control.Applicative) type class extends the `Apply` type class with a `pure` function that takes a value and returns that value lifted into the applicative functor. With `Maybe`, `pure` is the same as `Just`, and with `Either`, `pure` is the same as `Right`, but it is recommended to use `pure` in case of an eventual applicative functor change.
 
