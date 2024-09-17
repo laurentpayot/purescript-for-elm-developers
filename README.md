@@ -20,6 +20,21 @@ Laurent
 
 <hr>
 
+## Developer Experience
+
+### VS Code Plugins
+
+- [PureScript Language Support](https://marketplace.visualstudio.com/items?itemName=nwolverson.language-purescript): Syntax highlighting for the PureScript programming language
+- [PureScript IDE](https://marketplace.visualstudio.com/items?itemName=nwolverson.ide-purescript): PureScript IntelliSense, tooltip, errors, code actions with language-server-purescript/purs IDE server
+- [Purty](https://marketplace.visualstudio.com/items?itemName=mvakula.vscode-purty): PureScript formatter
+
+
+### Bundling
+
+[Spago](https://github.com/purescript/spago) is the PureScript package manager and build tool.
+
+The PureScript compiler (transpiler) is quite fast. The compiler messages are not as friendly as with Elm, unfortunately.
+
 ## Common packages
 
 [Pursuit](https://pursuit.purescript.org/) is the home of PureScript packages documentation. It lets you search by package, module, and function names, as well as approximate type signatures.
